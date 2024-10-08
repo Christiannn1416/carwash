@@ -14,7 +14,7 @@ endif; ?>
                 <div class="card-body">
                     <h5 class="card-title">Nuevo Producto.</h5>
                     <p class="card-text">Agrega un nuevo producto.</p>
-                    <a href="producto.php?accion=crear" class="btn btn-primary">Ir</a>
+                    <a href="producto.php?accion=crear" class="btn btn-success">Ir</a>
                 </div>
             </div>
         </div>
