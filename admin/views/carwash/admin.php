@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Catálogo de Productos</h5>
                     <p class="card-text">Agrega, elimina o modifica un producto.</p>
-                    <a href="productos.php" class="btn btn-primary">Ir</a>
+                    <a href="../../producto.php" class="btn btn-primary">Ir</a>
                 </div>
             </div>
         </div>
@@ -26,10 +26,9 @@
             <div class="card" style="width: 18rem;">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">Empleados</h5>
+                    <p class="card-text">Agrega, elimina o modifica un empleado.</p>
+                    <a href="../../empleado.php" class="btn btn-primary">Ir</a>
                 </div>
             </div>
         </div>
