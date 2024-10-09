@@ -5,13 +5,35 @@ class Cliente extends Sistema
 {
     function create($data)
     {
-
-
+        $result = [];
+        $this->conexion();
+        $sql = "insert into clientes(cliente,telefono,correo) values
+                                    (:cliente,
+                                    :telefono,
+                                    :correo);";
+        $insertar = $this->con->prepare($sql);
+        $insertar->bindParam(':cliente', $data['cliente'], PDO::PARAM_STR);
+        $insertar->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
+        $insertar->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+        $insertar->execute();
+        $result = $insertar->rowCount();
+        return $result;
     }
 
     function update($id, $data)
     {
-
+        $result = [];
+        $this->conexion();
+        $sql = "update clientes set cliente=:cliente,
+                                    telefono=:telefono,
+                                    correo=:correo where id_cliente=:id_cliente;";
+        $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':cliente', $data['cliente'], PDO::PARAM_STR);
+        $modificar->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
+        $modificar->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+        $modificar->execute();
+        $result = $modificar->rowCount();
+        return $result;
     }
 
     function delete($id)

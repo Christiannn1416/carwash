@@ -20,15 +20,16 @@ endif; ?>" method="post">
     <div class="row mb-3">
         <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
         <div class="col-sm-10">
-            <input type="text" name="data[telefono]" placeholder="Escribe aquí la telefono" class="form-control" value="<?php if (isset($clientes['telefono'])):
-                echo ($clientes['telefono']);
-            endif; ?>" />
+            <input type="number" name="data[telefono]" placeholder="Escribe aquí el telefono" class="form-control"
+                value="<?php if (isset($clientes['telefono'])):
+                    echo ($clientes['telefono']);
+                endif; ?>" />
         </div>
     </div>
     <div class="row mb-3">
         <label for="correo" class="col-sm-2 col-form-label">Correo</label>
         <div class="col-sm-10">
-            <input type="number" name="data[correo]" placeholder="Escribe aquí el precio" class="form-control" value="<?php if (isset($clientes['correo'])):
+            <input type="text" name="data[correo]" placeholder="Escribe aquí el correo" class="form-control" value="<?php if (isset($clientes['correo'])):
                 echo ($clientes['correo']);
             endif; ?>" />
         </div>
