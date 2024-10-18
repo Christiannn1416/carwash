@@ -53,10 +53,10 @@ switch ($accion) {
             }
         }
         $lavados = $app->readAll();
-        require_once("views/lavado/index.html");
+        require_once("views/lavado/index.php");
         break;
     default:
         $lavados = $app->readAll();
-        require_once("views/lavado/index.html");
+        require_once("views/lavado/index.php");
 }
 ?>

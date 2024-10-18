@@ -1,141 +1,76 @@
-const DOMstrings = {
-  stepsBtnClass: "multisteps-form__progress-btn",
-  stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
-  stepsBar: document.querySelector(".multisteps-form__progress"),
-  stepsForm: document.querySelector(".multisteps-form__form"),
-  stepsFormTextareas: document.querySelectorAll(".multisteps-form__textarea"),
-  stepFormPanelClass: "multisteps-form__panel",
-  stepFormPanels: document.querySelectorAll(".multisteps-form__panel"),
-  stepPrevBtnClass: "js-btn-prev",
-  stepNextBtnClass: "js-btn-next",
-};
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
 
-const removeClasses = (elemSet, className) => {
-  elemSet.forEach((elem) => {
-    elem.classList.remove(className);
-  });
-};
-
-const findParent = (elem, parentClass) => {
-  let currentNode = elem;
-
-  while (!currentNode.classList.contains(parentClass)) {
-    currentNode = currentNode.parentNode;
-  }
-
-  return currentNode;
-};
-
-const getActiveStep = (elem) => {
-  return Array.from(DOMstrings.stepsBtns).indexOf(elem);
-};
-
-const setActiveStep = (activeStepNum) => {
-  removeClasses(DOMstrings.stepsBtns, "js-active");
-
-  DOMstrings.stepsBtns.forEach((elem, index) => {
-    if (index <= activeStepNum) {
-      elem.classList.add("js-active");
-    }
-  });
-};
-
-const getActivePanel = () => {
-  let activePanel;
-
-  DOMstrings.stepFormPanels.forEach((elem) => {
-    if (elem.classList.contains("js-active")) {
-      activePanel = elem;
-    }
-  });
-
-  return activePanel;
-};
-
-const setActivePanel = (activePanelNum) => {
-  removeClasses(DOMstrings.stepFormPanels, "js-active");
-
-  DOMstrings.stepFormPanels.forEach((elem, index) => {
-    if (index === activePanelNum) {
-      elem.classList.add("js-active");
-
-      setFormHeight(elem);
-    }
-  });
-};
-
-const formHeight = (activePanel) => {
-  const activePanelHeight = activePanel.offsetHeight;
-
-  DOMstrings.stepsForm.style.height = `${activePanelHeight}px`;
-};
-
-const setFormHeight = () => {
-  const activePanel = getActivePanel();
-
-  formHeight(activePanel);
-};
-
-DOMstrings.stepsBar.addEventListener("click", (e) => {
-  const eventTarget = e.target;
-
-  if (!eventTarget.classList.contains(`${DOMstrings.stepsBtnClass}`)) {
-    return;
-  }
-
-  const activeStep = getActiveStep(eventTarget);
-
-  setActiveStep(activeStep);
-
-  setActivePanel(activeStep);
-});
-
-DOMstrings.stepsForm.addEventListener("click", (e) => {
-  const eventTarget = e.target;
-
-  if (
-    !(
-      eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) ||
-      eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`)
-    )
-  ) {
-    return;
-  }
-
-  const activePanel = findParent(
-    eventTarget,
-    `${DOMstrings.stepFormPanelClass}`
-  );
-
-  let activePanelNum = Array.from(DOMstrings.stepFormPanels).indexOf(
-    activePanel
-  );
-
-  if (eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`)) {
-    activePanelNum--;
+function showTab(n) {
+  // This function will display the specified tab of the form...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  //... and fix the Previous/Next buttons:
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
   } else {
-    activePanelNum++;
+    document.getElementById("prevBtn").style.display = "inline";
   }
+  if (n == x.length - 1) {
+    document.getElementById("nextBtn").innerHTML = "Submit";
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Next";
+  }
+  //... and run a function that will display the correct step indicator:
+  fixStepIndicator(n);
+}
 
-  setActiveStep(activePanelNum);
-  setActivePanel(activePanelNum);
-});
+function nextPrev(n) {
+  // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab");
+  // Exit the function if any field in the current tab is invalid:
+  if (n == 1 && !validateForm()) return false;
+  // Hide the current tab:
+  x[currentTab].style.display = "none";
+  // Increase or decrease the current tab by 1:
+  currentTab = currentTab + n;
+  // if you have reached the end of the form...
+  if (currentTab >= x.length) {
+    // ... the form gets submitted:
+    document.getElementById("regForm").submit();
+    return false;
+  }
+  // Otherwise, display the correct tab:
+  showTab(currentTab);
+}
 
-window.addEventListener("load", setFormHeight, false);
+function validateForm() {
+  // This function deals with validation of the form fields
+  var x,
+    y,
+    i,
+    valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  // A loop that checks every input field in the current tab:
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].className += " invalid";
+      // and set the current valid status to false
+      valid = false;
+    }
+  }
+  // If the valid status is true, mark the step as finished and valid:
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; // return the valid status
+}
 
-window.addEventListener("resize", setFormHeight, false);
-
-const setAnimationType = (newType) => {
-  DOMstrings.stepFormPanels.forEach((elem) => {
-    elem.dataset.animation = newType;
-  });
-};
-
-//changing animation
-const animationSelect = document.querySelector(".pick-animation__select");
-
-animationSelect.addEventListener("change", () => {
-  const newAnimationType = animationSelect.value;
-
-  setAnimationType(newAnimationType);
-});
+function fixStepIndicator(n) {
+  // This function removes the "active" class of all steps...
+  var i,
+    x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
+  }
+  //... and adds the "active" class on the current step:
+  x[n].className += " active";
+}

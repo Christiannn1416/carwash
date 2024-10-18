@@ -28,6 +28,7 @@ class Cliente extends Sistema
                                     telefono=:telefono,
                                     correo=:correo where id_cliente=:id_cliente;";
         $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':id_cliente', $id, PDO::PARAM_STR);
         $modificar->bindParam(':cliente', $data['cliente'], PDO::PARAM_STR);
         $modificar->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
         $modificar->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
