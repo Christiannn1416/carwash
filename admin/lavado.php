@@ -1,11 +1,20 @@
 <?php
 require_once('lavado.class.php');
+require_once('cliente.class.php');
+require_once('servicio.class.php');
+require_once('empleado.class.php');
 $app = new Lavado();
+$appcliente = new Cliente();
+$appservicio = new Servicio();
+$appempleado = new Empleado();
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
 switch ($accion) {
     case 'crear':
+        $clientes = $appcliente->readAll();
+        $servicios = $appservicio->readAll();
+        $empleados = $appempleado->readAll();
         require_once("views/lavado/crear.php");
         break;
     case 'nuevo':
