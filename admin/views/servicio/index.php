@@ -1,4 +1,4 @@
-<?php require('views/header.php') ?>
+<?php require('views/header_admin.php') ?>
 <?php if (isset($mensaje)):
     $app->alert($tipo, $mensaje);
 endif; ?>

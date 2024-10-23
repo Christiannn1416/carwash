@@ -1,4 +1,4 @@
-<?php require('views/header.php') ?>
+<?php require('views/header_admin.php') ?>
 <h1 class="text-center"><?php if ($accion == "crear"):
     echo ("Nuevo ");
 else:
@@ -35,4 +35,3 @@ endif; ?>" method="post">
     </div>
     <input type="submit" name="data[enviar]" value="Guardar" class="btn btn-success" />
 </form>
-<?php require('views/footer.php') ?>

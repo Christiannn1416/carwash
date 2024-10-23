@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('config.class.php');
 class Sistema
 {
@@ -23,6 +24,11 @@ class Sistema
             $roles->bindParam(':usuario', $usuario, PDO::PARAM_STR);
             $roles->execute();
             $data = $roles->fetchAll(PDO::FETCH_ASSOC);
+            $roles = [];
+            foreach ($data as $rol) {
+                array_push($roles, $rol['rol']);
+            }
+            $data = $roles;
         }
         return $data;
     }
@@ -40,8 +46,70 @@ class Sistema
             $privilegio->bindParam(':usuario', $usuario, PDO::PARAM_STR);
             $privilegio->execute();
             $data = $privilegio->fetchAll(PDO::FETCH_ASSOC);
+            $permisos = [];
+            foreach ($data as $permiso) {
+                array_push($permisos, $permiso['permiso']);
+            }
+            $data = $permisos;
         }
         return $data;
+    }
+    function login($usuario, $contrasena)
+    {
+        $contrasena = md5($contrasena);
+        $acceso = false;
+        if (filter_var($usuario)) {
+            $this->conexion();
+            $sql = "select * from usuario where usuario=:usuario and contrasena=:contrasena;";
+            $sql = $this->con->prepare($sql);
+            $sql->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+            $sql->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
+            $sql->execute();
+            $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
+            if (isset($resultado[0])) {
+                $acceso = true;
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['validado'] = $acceso;
+                $roles = $this->getRol($usuario);
+                $privilegios = $this->getPrivilegio($usuario);
+                $_SESSION['roles'] = $roles;
+                $_SESSION['privilegios'] = $privilegios;
+                return $acceso;
+            }
+        }
+        $_SESSION['validado'] = false;
+        return $acceso;
+    }
+
+    function logout()
+    {
+        unset($_SESSION);
+        session_destroy();
+        $mensaje = "Sesión cerrada <a href='login.php'>[Presione aquí para volver a entrar]<a/>";
+        $tipo = "succes";
+        require_once('views/header.php');
+        $this->alert($tipo, $mensaje);
+        require_once('views/footer.php');
+    }
+
+    function checkRol($rol)
+    {
+        if (isset($_SESSION['roles'])) {
+            $roles = $_SESSION['roles'];
+            if (!in_array($rol, $roles)) {
+                $mensaje = "ERROR: usted no tiene el rol adecuado";
+                $tipo = "danger";
+                require_once('views/header.php');
+                $this->alert($tipo, $mensaje);
+                die();
+            }
+        } else {
+            $mensaje = "Requiere iniciar sesión <a href='login.php'>[Presione aquí para iniciar sesión]<a/>";
+            $tipo = "danger";
+            require_once('views/header.php');
+            $this->alert($tipo, $mensaje);
+            die();
+        }
     }
 }
 ?>

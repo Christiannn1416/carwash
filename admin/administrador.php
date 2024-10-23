@@ -1,4 +1,4 @@
-<?php require('views/header.php') ?>
+<?php require('views/header_admin.php') ?>
 <h1 class="text-center">Administrador</h1>
 <div class="container text-center ">
     <div class="row row-cols-3">
