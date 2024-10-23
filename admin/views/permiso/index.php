@@ -19,9 +19,9 @@ endif; ?>
                 <td><?php echo $permiso['permiso']; ?></td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="permisos.php?accion=actualizar&id=<?php echo $permiso['id_permiso']; ?>"
+                        <a href="permiso.php?accion=actualizar&id=<?php echo $permiso['id_permiso']; ?>"
                             class="btn btn-primary">Actualizar</a>
-                        <a href="permisos.php?accion=eliminar&id=<?php echo $permiso['id_permiso']; ?>"
+                        <a href="permiso.php?accion=eliminar&id=<?php echo $permiso['id_permiso']; ?>"
                             class="btn btn-danger">Eliminar</a>
                     </div>
                 </td>

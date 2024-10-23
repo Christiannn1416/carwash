@@ -19,9 +19,9 @@ endif; ?>
                 <td><?php echo $rol['rol']; ?></td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="roles.php?accion=actualizar&id=<?php echo $rol['id_rol']; ?>"
+                        <a href="rol.php?accion=actualizar&id=<?php echo $rol['id_rol']; ?>"
                             class="btn btn-primary">Actualizar</a>
-                        <a href="roles.php?accion=eliminar&id=<?php echo $rol['id_rol']; ?>"
+                        <a href="rol.php?accion=eliminar&id=<?php echo $rol['id_rol']; ?>"
                             class="btn btn-danger">Eliminar</a>
                     </div>
                 </td>

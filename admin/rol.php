@@ -4,6 +4,7 @@ $app = new Rol();
 $app->checkRol('administrador');
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
+
 switch ($accion) {
     case 'crear':
         include 'views/roles/crear.php';
@@ -58,5 +59,6 @@ switch ($accion) {
         $roles = $app->readAll();
         include 'views/roles/index.php';
 }
+
 require_once('views/footer.php');
 ?>

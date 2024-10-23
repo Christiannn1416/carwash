@@ -1,6 +1,6 @@
 <?php require('views/header_admin.php'); ?>
 <h1><?php echo ($accion == "crear") ? "Nuevo " : "Modificar "; ?>Rol</h1>
-<form action="roles.php?accion=<?php echo ($accion == "crear") ? 'nuevo' : 'modificar&id=' . $id; ?>" method="post">
+<form action="rol.php?accion=<?php echo ($accion == "crear") ? 'nuevo' : 'modificar&id=' . $id; ?>" method="post">
     <div class="row mb-3">
         <label for="rol" class="col-sm-2 col-form-label">Nombre del Rol</label>
         <div class="col-sm-10">
