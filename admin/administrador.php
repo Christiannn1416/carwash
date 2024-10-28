@@ -1,4 +1,7 @@
-<?php require('views/header_admin.php') ?>
+<?php require('views/header_admin.php');
+require_once('administrador.class.php');
+$app = new Administrador();
+$app->checkRol('administrador'); ?>
 <h1 class="text-center">Administrador</h1>
 <div class="container text-center ">
     <div class="row row-cols-4">

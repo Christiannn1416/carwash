@@ -13,7 +13,7 @@ switch ($accion) {
             $mensaje = "Bienvenido al Sistema";
             $tipo = "success";
             $app->checkRol('administrador');
-            require_once('views/header.php');
+            require_once('administrador.php');
             $app->alert($tipo, $mensaje);
         } else {
             $mensaje = "Usuario o contraseña equivocado <a href='login.php'>[Presione aquí para volver a intentar]</a>";
@@ -26,7 +26,6 @@ switch ($accion) {
     case 'logout':
         $app->logout();
         break;
-
     default:
         include('views/login/index.php');
         break;
