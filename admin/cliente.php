@@ -21,6 +21,19 @@ switch ($accion) {
         $clientes = $app->readAll();
         require_once('views/cliente/index.php');
         break;
+    case 'nuevo_cliente_lavado':
+        $data = $_POST['data'];
+        $resultado = $app->create($data);
+        if ($resultado) {
+            $mensaje = "El cliente se ha agregado correctamente";
+            $tipo = "success";
+        } else {
+            $mensaje = "Ocurrió un error al agregar";
+            $tipo = "danger";
+        }
+        $clientes = $app->readAll();
+        require_once('views/lavado/crear.php');
+        break;
     case 'actualizar':
         $clientes = $app->readOne($id);
         require_once('views/cliente/crear.php');

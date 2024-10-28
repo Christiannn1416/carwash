@@ -17,6 +17,12 @@ switch ($accion) {
         $empleados = $appempleado->readAll();
         require_once("views/lavado/crear.php");
         break;
+    case 'crear_cliente_lavado':
+        $clientes = $appcliente->readAll();
+        $servicios = $appservicio->readAll();
+        $empleados = $appempleado->readAll();
+        require_once("views/lavado/crear_cliente_lavado.php");
+        break;
     case 'nuevo':
         $data = $_POST['data'];
         $resultado = $app->create($data);

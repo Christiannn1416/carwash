@@ -88,54 +88,64 @@
 
 <body>
   <form id="regForm" action="/action_page.php">
+    <?php require('views/header_admin.php') ?>
     <h1>Nuevo Lavado:</h1>
-
+    <!-- Seleccionar cliente -->
     <div class="tab">
-      Cliente
-      <table class="table table-striped table-dark">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Cliente</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Acumulado</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($clientes as $cliente): ?>
-            <tr>
-              <th scope="row"><?php echo $cliente['id_cliente']; ?> </th>
-              <td><?php echo $cliente['cliente']; ?></td>
-              <td><?php echo $cliente['telefono']; ?></td>
-              <td><?php echo $cliente['correo']; ?></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                  <a href="cliente.php?accion=actualizar&id=<?php echo $cliente['id_cliente']; ?>" class="btn btn-primary"
-                    style="margin-right:1rem;">Seleccionar</a>
-                </div>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+      Clientes:
+
+      <?php if (isset($mensaje)):
+        $app->alert($tipo, $mensaje);
+      endif; ?>
+
+      <h1 class="text-center">Clientes</h1>
+      <a href="lavado.php?accion=crear_cliente_lavado" class="btn btn-success">Nuevo<a>
+
+          <table class="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Acumulado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($clientes as $cliente): ?>
+                <tr>
+                  <th scope="row"><?php echo $cliente['id_cliente']; ?> </th>
+                  <td><?php echo $cliente['cliente']; ?></td>
+                  <td><?php echo $cliente['telefono']; ?></td>
+                  <td><?php echo $cliente['correo']; ?></td>
+                  <td>
+                    <input class="btn btn-primary seleccionar-btn" type="button" value="Seleccionar"
+                      data-id="<?php echo $cliente['id_cliente']; ?>">
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
 
     </div>
-    <div class="tab">
 
+    <!-- Info Carro -->
+    <div class="tab">
       <p>
-        <label for="id_cliente" class="col-sm-2 col-form-label">Carro</label>
-        <input placeholder="Carro" oninput="this.className = ''" name="lname" />
+        <label for="Carro" class="col-sm-2 col-form-label">Carro</label>
+        <input placeholder="Carro" name="marca_vehiculo" id="marca_vehiculo" oninput="this.className = ''">
       </p>
       <p>
         <label for="id_cliente" class="col-sm-2 col-form-label">Color</label>
-        <input placeholder="Color" oninput="this.className = ''" name="lname" />
+        <input placeholder="Color" name="color" id="color" oninput="this.className = ''">
       </p>
       <p>
-        <label for="id_cliente" class="col-sm-2 col-form-label">Placas</label>
-        <input placeholder="Placas" oninput="this.className = ''" name="lname" />
+        <label for="placas" class="col-sm-2 col-form-label">Placas</label>
+        <input placeholder="Placas" name="placas" id="placas" oninput="this.className = ''">
       </p>
     </div>
+
+    <!-- Seleccionar servicio -->
     <div class="tab">
       Servicio:
       <div class="container text-center">
@@ -147,13 +157,20 @@
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $servicio['servicio']; ?></h5>
                   <p class="card-text"><?php echo $servicio['descripcion']; ?></p>
-                  <input class="btn btn-primary" type="button"
-                    value="Uber/Taxi $<?php echo $servicio['p_ubertaxi']; ?>"></input>
-                  <input class="btn btn-primary" type="button"
-                    value="Carro $<?php echo $servicio['p_carro']; ?> "></input>
-                  <input class="btn btn-primary" type="button"
-                    value="Camioneta $<?php echo $servicio['p_camioneta']; ?>"></input>
-                  <input class="btn btn-primary" type="button" value="Van $<?php echo $servicio['p_van']; ?>"></input>
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Uber/Taxi $<?php echo $servicio['p_ubertaxi']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_ubertaxi']; ?>">
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Carro $<?php echo $servicio['p_carro']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_carro']; ?>">
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Camioneta $<?php echo $servicio['p_camioneta']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_camioneta']; ?>">
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Van $<?php echo $servicio['p_van']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_van']; ?>">
                 </div>
               </div>
             </div>
@@ -161,32 +178,38 @@
         </div>
       </div>
     </div>
+
+    <!-- Seleccionar empleado -->
     <div class="tab">
       Empleado:
-      <div class="row row-cols-3">
-        <?php foreach ($empleados as $empleado): ?>
-          <div class="col">
-            <div class="card" style="width: 18rem;">
-              <img src="..." class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
-                <a href="empleado.php?accion=actualizar&id=<?php echo $empleado['id_empleado']; ?>"
-                  class="btn btn-primary">Asignar</a>
+      <div class="container text-center">
+        <div class="row row-cols-3">
+          <?php foreach ($empleados as $empleado): ?>
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
+                  <input class="btn btn-primary seleccionar-empleado" type="button" value="Asignar"
+                    data-empleado="<?php echo $empleado['id_empleado']; ?>">
+                </div>
               </div>
             </div>
-          </div>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
+        </div>
       </div>
     </div>
+
+    <!-- Resumen -->
     <div class="tab">
-      Login Info:
-      <p>
-        <input placeholder="Username..." oninput="this.className = ''" name="uname" />
-      </p>
-      <p>
-        <input placeholder="Password..." oninput="this.className = ''" name="pword" type="password" />
-      </p>
+      <h3>Resumen:</h3>
+      <p>Cliente ID: <span id="resumen_cliente"></span></p>
+      <p>Carro: <span id="resumen_vehiculo"></span></p>
+      <p>Servicio: <span id="resumen_servicio"></span></p>
+      <p>Empleado: <span id="resumen_empleado"></span></p>
     </div>
+
+    <!--  -->
     <div style="overflow: auto">
       <div style="float: right">
         <button type="button" id="prevBtn" onclick="nextPrev(-1)">
@@ -201,88 +224,130 @@
       <span class="step"></span>
       <span class="step"></span>
       <span class="step"></span>
+      <span class="step"></span>
     </div>
   </form>
 
   <script>
-    var currentTab = 0; // Current tab is set to be the first tab (0)
-    showTab(currentTab); // Display the current tab
+    let currentTab = 0;
+    showTab(currentTab);
 
     function showTab(n) {
-      // This function will display the specified tab of the form...
-      var x = document.getElementsByClassName("tab");
-      x[n].style.display = "block";
-      //... and fix the Previous/Next buttons:
-      if (n == 0) {
+      let tabs = document.getElementsByClassName("tab");
+      tabs[n].style.display = "block";
+      if (n === 0) {
         document.getElementById("prevBtn").style.display = "none";
       } else {
         document.getElementById("prevBtn").style.display = "inline";
       }
-      if (n == x.length - 1) {
+      if (n === (tabs.length - 1)) {
         document.getElementById("nextBtn").innerHTML = "Submit";
       } else {
         document.getElementById("nextBtn").innerHTML = "Next";
       }
-      //... and run a function that will display the correct step indicator:
       fixStepIndicator(n);
     }
 
     function nextPrev(n) {
-      // This function will figure out which tab to display
-      var x = document.getElementsByClassName("tab");
-      // Exit the function if any field in the current tab is invalid:
-      if (n == 1 && !validateForm()) return false;
-      // Hide the current tab:
-      x[currentTab].style.display = "none";
-      // Increase or decrease the current tab by 1:
+      let tabs = document.getElementsByClassName("tab");
+      if (n === 1 && !validateForm()) return false;
+      tabs[currentTab].style.display = "none";
       currentTab = currentTab + n;
-      // if you have reached the end of the form...
-      if (currentTab >= x.length) {
-        // ... the form gets submitted:
+      if (currentTab >= tabs.length) {
         document.getElementById("regForm").submit();
         return false;
       }
-      // Otherwise, display the correct tab:
       showTab(currentTab);
     }
 
     function validateForm() {
-      // This function deals with validation of the form fields
-      var x,
-        y,
-        i,
-        valid = true;
-      x = document.getElementsByClassName("tab");
-      y = x[currentTab].getElementsByTagName("input");
-      // A loop that checks every input field in the current tab:
-      for (i = 0; i < y.length; i++) {
-        // If a field is empty...
-        if (y[i].value == "") {
-          // add an "invalid" class to the field:
-          y[i].className += " invalid";
-          // and set the current valid status to false
+      let tabs = document.getElementsByClassName("tab");
+      let inputs = tabs[currentTab].getElementsByTagName("input");
+      let valid = true;
+      for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value === "") {
+          inputs[i].className += " invalid";
           valid = false;
         }
       }
-      // If the valid status is true, mark the step as finished and valid:
-      if (valid) {
-        document.getElementsByClassName("step")[currentTab].className +=
-          " finish";
-      }
-      return valid; // return the valid status
+      return valid;
     }
 
     function fixStepIndicator(n) {
-      // This function removes the "active" class of all steps...
-      var i,
-        x = document.getElementsByClassName("step");
-      for (i = 0; i < x.length; i++) {
-        x[i].className = x[i].className.replace(" active", "");
+      let steps = document.getElementsByClassName("step");
+      for (let i = 0; i < steps.length; i++) {
+        steps[i].className = steps[i].className.replace(" active", "");
       }
-      //... and adds the "active" class on the current step:
-      x[n].className += " active";
+      steps[n].className += " active";
     }
+
+    // Handle the selection of clients, services, and employees
+    const seleccionarBtns = document.querySelectorAll('.seleccionar-btn');
+    seleccionarBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const clienteId = btn.getAttribute('data-id');
+        document.getElementById('resumen_cliente').innerText = clienteId;
+        sessionStorage.setItem('clienteId', clienteId);
+      });
+    });
+
+    const seleccionarServicios = document.querySelectorAll('.seleccionar-servicio');
+    seleccionarServicios.forEach(servicio => {
+      servicio.addEventListener('click', () => {
+        const servicioId = servicio.getAttribute('data-id');
+        const precio = servicio.getAttribute('data-precio');
+        document.getElementById('resumen_servicio').innerText = `Servicio ID: ${servicioId}, Precio: $${precio}`;
+        sessionStorage.setItem('servicioId', servicioId);
+      });
+    });
+
+    const seleccionarEmpleados = document.querySelectorAll('.seleccionar-empleado');
+    seleccionarEmpleados.forEach(empleado => {
+      empleado.addEventListener('click', () => {
+        const empleadoId = empleado.getAttribute('data-empleado');
+        document.getElementById('resumen_empleado').innerText = empleadoId;
+        sessionStorage.setItem('empleadoId', empleadoId);
+      });
+    });
+
+    // Guarda los datos del vehículo en el momento en que se cambian
+    document.getElementById("marca_vehiculo").addEventListener("change", function () {
+      sessionStorage.setItem("marca_vehiculo", this.value);
+    });
+    document.getElementById("color").addEventListener("change", function () {
+      sessionStorage.setItem("color", this.value);
+    });
+    document.getElementById("placas").addEventListener("change", function () {
+      sessionStorage.setItem("placas", this.value);
+    });
+
+    // On page load, retrieve and display the stored data
+    window.addEventListener('load', () => {
+      const clienteId = sessionStorage.getItem('clienteId');
+      const servicioId = sessionStorage.getItem('servicioId');
+      const empleadoId = sessionStorage.getItem('empleadoId');
+      const marcaVehiculo = sessionStorage.getItem('marca_vehiculo'); // Recupera marca del vehículo
+      const color = sessionStorage.getItem('color');
+      const placas = sessionStorage.getItem('placas');
+
+      // Muestra el ID del cliente
+      if (clienteId) document.getElementById('resumen_cliente').innerText = clienteId;
+
+      // Muestra la información del servicio
+      if (servicioId) document.getElementById('resumen_servicio').innerText = `Servicio ID: ${servicioId}`;
+
+      // Muestra el ID del empleado
+      if (empleadoId) document.getElementById('resumen_empleado').innerText = empleadoId;
+
+      // Muestra la información del vehículo (marca, color, placas)
+      if (marcaVehiculo || color || placas) {
+        document.getElementById('resumen_vehiculo').innerText = `Vehículo: ${marcaVehiculo || 'N/A'}, Color: ${color || 'N/A'}, Placas: ${placas || 'N/A'}`;
+      }
+    });
+
   </script>
+
+
 </body>
 
 </html>
