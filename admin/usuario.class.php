@@ -43,11 +43,11 @@ class Usuario extends Sistema
     function update($id, $data)
     {
         $this->conexion();
-        $sql = "update usuario set correo = :correo, contrasena = :contrasena where id_usuario = :id_usuario";
+        $sql = "update usuario set usuario = :usuario, contrasena = :contrasena where id_usuario = :id_usuario";
         $modificar = $this->con->prepare($sql);
         $data['contrasena'] = md5($data['contrasena']); // Encriptar la contraseña con MD5
         $modificar->bindParam(':id_usuario', $id, PDO::PARAM_INT);
-        $modificar->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+        $modificar->bindParam(':usuario', $data['usuario'], PDO::PARAM_STR);
         $modificar->bindParam(':contrasena', $data['contrasena'], PDO::PARAM_STR);
         $modificar->execute();
         return $modificar->rowCount();
