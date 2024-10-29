@@ -7,7 +7,7 @@ $app->checkRol('administrador'); ?>
     <div class="row row-cols-4">
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <img src="icons\lavado-de-autos.png" class="card-img-top" alt="Nuevo Lavado">
+                <img src="icons\lavado-de-autos.png" class="card-img-top icon" alt="Nuevo Lavado">
                 <div class="card-body">
                     <h5 class="card-title">Nuevo Lavado</h5>
                     <p class="card-text">Registra un nuevo lavado.</p>

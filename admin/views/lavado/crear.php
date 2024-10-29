@@ -92,11 +92,15 @@
     <h1>Nuevo Lavado:</h1>
     <!-- Seleccionar cliente -->
     <div class="tab">
+      Clientes:
+
       <?php if (isset($mensaje)):
         $app->alert($tipo, $mensaje);
       endif; ?>
-      <h1 class="text-center">Cliente:</h1>
-      <a href=" lavado.php?accion=crear_cliente_lavado" class="btn btn-success">Nuevo<a>
+
+      <h1 class="text-center">Clientes</h1>
+      <a href="lavado.php?accion=crear_cliente_lavado" class="btn btn-success">Nuevo<a>
+
           <table class="table table-striped table-dark">
             <thead>
               <tr>
@@ -127,106 +131,82 @@
 
     <!-- Info Carro -->
     <div class="tab">
-      <h1 class="text-center">Info de vehículo:</h3>
-        <p>
-          <label for=" Vehículo" class="col-sm-2 col-form-label">Vehículo</label>
-          <input placeholder="Vehículo" name="marca_vehiculo" id="marca_vehiculo" oninput="this.className = ''">
-        </p>
-        <p>
-          <label for="id_cliente" class="col-sm-2 col-form-label">Color</label>
-          <input placeholder="Color" name="color" id="color" oninput="this.className = ''">
-        </p>
-        <p>
-          <label for="placas" class="col-sm-2 col-form-label">Placas</label>
-          <input placeholder="Placas" name="placas" id="placas" oninput="this.className = ''">
-        </p>
+      <p>
+        <label for="Carro" class="col-sm-2 col-form-label">Carro</label>
+        <input placeholder="Carro" name="marca_vehiculo" id="marca_vehiculo" oninput="this.className = ''">
+      </p>
+      <p>
+        <label for="id_cliente" class="col-sm-2 col-form-label">Color</label>
+        <input placeholder="Color" name="color" id="color" oninput="this.className = ''">
+      </p>
+      <p>
+        <label for="placas" class="col-sm-2 col-form-label">Placas</label>
+        <input placeholder="Placas" name="placas" id="placas" oninput="this.className = ''">
+      </p>
     </div>
 
     <!-- Seleccionar servicio -->
     <div class="tab">
-      <h1 class="text-center">Servicio:</h3>
-        <div class=" container text-center">
-          <div class="row row-cols-3">
-            <?php foreach ($servicios as $servicio): ?>
-              <div class="col">
-                <div class="card">
-                  <img src="..." class="card-img-top" alt="<?php echo $servicio['servicio']; ?>">
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $servicio['servicio']; ?></h5>
-                    <p class="card-text"><?php echo $servicio['descripcion']; ?></p>
-                    <input class="btn btn-primary seleccionar-servicio" type="button"
-                      value="Uber/Taxi $<?php echo $servicio['p_ubertaxi']; ?>"
-                      data-id="<?php echo $servicio['id_servicio']; ?>"
-                      data-precio="<?php echo $servicio['p_ubertaxi']; ?>">
-                    <input class="btn btn-primary seleccionar-servicio" type="button"
-                      value="Carro $<?php echo $servicio['p_carro']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
-                      data-precio="<?php echo $servicio['p_carro']; ?>">
-                    <input class="btn btn-primary seleccionar-servicio" type="button"
-                      value="Camioneta $<?php echo $servicio['p_camioneta']; ?>"
-                      data-id="<?php echo $servicio['id_servicio']; ?>"
-                      data-precio="<?php echo $servicio['p_camioneta']; ?>">
-                    <input class="btn btn-primary seleccionar-servicio" type="button"
-                      value="Van $<?php echo $servicio['p_van']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
-                      data-precio="<?php echo $servicio['p_van']; ?>">
-                  </div>
+      Servicio:
+      <div class="container text-center">
+        <div class="row row-cols-3">
+          <?php foreach ($servicios as $servicio): ?>
+            <div class="col">
+              <div class="card">
+                <img src="..." class="card-img-top" alt="<?php echo $servicio['servicio']; ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $servicio['servicio']; ?></h5>
+                  <p class="card-text"><?php echo $servicio['descripcion']; ?></p>
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Uber/Taxi $<?php echo $servicio['p_ubertaxi']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_ubertaxi']; ?>">
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Carro $<?php echo $servicio['p_carro']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_carro']; ?>">
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Camioneta $<?php echo $servicio['p_camioneta']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_camioneta']; ?>">
+                  <input class="btn btn-primary seleccionar-servicio" type="button"
+                    value="Van $<?php echo $servicio['p_van']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
+                    data-precio="<?php echo $servicio['p_van']; ?>">
                 </div>
               </div>
-            <?php endforeach; ?>
-          </div>
+            </div>
+          <?php endforeach; ?>
         </div>
+      </div>
     </div>
 
     <!-- Seleccionar empleado -->
     <div class="tab">
-      <h1 class="text-center">Empleado:</h3>
-        <div class=" container text-center">
-          <div class="row row-cols-3">
-            <?php foreach ($empleados as $empleado): ?>
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img src="..." class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
-                    <input class="btn btn-primary seleccionar-empleado" type="button" value="Asignar"
-                      data-empleado="<?php echo $empleado['id_empleado']; ?>">
-                  </div>
+      Empleado:
+      <div class="container text-center">
+        <div class="row row-cols-3">
+          <?php foreach ($empleados as $empleado): ?>
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
+                  <input class="btn btn-primary seleccionar-empleado" type="button" value="Asignar"
+                    data-empleado="<?php echo $empleado['id_empleado']; ?>">
                 </div>
               </div>
-            <?php endforeach; ?>
-          </div>
+            </div>
+          <?php endforeach; ?>
         </div>
-    </div>
-
-    <!-- Producto extra  -->
-    <div class="tab">
-      <h1 class="text-center">Agrega un producto extra:</h3>
-        <div class=" container text-center">
-          <div class="row row-cols-3">
-            <?php foreach ($productos as $producto): ?>
-              <div class="col">
-                <div class="card" style="width: 18rem;">
-                  <img src="..." class="card-img-top" alt="<?php echo $producto['producto']; ?>">
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
-                    <p class="card-text"><?php echo $producto['descripcion']; ?></p>
-                    <p class="card-text">$<?php echo $producto['precio']; ?></p>
-                    <input class="btn btn-primary seleccionar-empleado" type="button" value="Agregar"
-                      data-empleado="<?php echo $empleado['id_empleado']; ?>">
-                  </div>
-                </div>
-              </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
+      </div>
     </div>
 
     <!-- Resumen -->
     <div class="tab">
-      <h1 class="text-center">Resumen:</h3>
-        <p>Cliente ID: <span id=" resumen_cliente"></span></p>
-        <p> <span id="resumen_vehiculo"></span></p>
-        <p>Servicio: <span id="resumen_servicio"></span></p>
-        <p>Empleado: <span id="resumen_empleado"></span></p>
+      <h3>Resumen:</h3>
+      <p>Cliente ID: <span id="resumen_cliente"></span></p>
+      <p>Carro: <span id="resumen_vehiculo"></span></p>
+      <p>Servicio: <span id="resumen_servicio"></span></p>
+      <p>Empleado: <span id="resumen_empleado"></span></p>
     </div>
 
     <!--  -->
@@ -240,7 +220,6 @@
     </div>
     <!-- Circles which indicates the steps of the form: -->
     <div style="text-align: center; margin-top: 40px">
-      <span class="step"></span>
       <span class="step"></span>
       <span class="step"></span>
       <span class="step"></span>
@@ -307,8 +286,19 @@
     seleccionarBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const clienteId = btn.getAttribute('data-id');
+        const previousClientId = sessionStorage.getItem('clienteId');
         document.getElementById('resumen_cliente').innerText = clienteId;
         sessionStorage.setItem('clienteId', clienteId);
+
+        // Si el cliente es nuevo, borrar datos previos del vehículo
+        if (previousClientId !== clienteId) {
+          sessionStorage.removeItem('marca_vehiculo');
+          sessionStorage.removeItem('color');
+          sessionStorage.removeItem('placas');
+
+          // Actualizar el resumen del vehículo a N/A solo si se cambia de cliente
+          document.getElementById('resumen_vehiculo').innerText = 'Vehículo: N/A, Color: N/A, Placas: N/A';
+        }
       });
     });
 
@@ -334,22 +324,29 @@
     // Guarda los datos del vehículo en el momento en que se cambian
     document.getElementById("marca_vehiculo").addEventListener("change", function () {
       sessionStorage.setItem("marca_vehiculo", this.value);
+      updateVehicleSummary();
     });
     document.getElementById("color").addEventListener("change", function () {
       sessionStorage.setItem("color", this.value);
+      updateVehicleSummary();
     });
     document.getElementById("placas").addEventListener("change", function () {
       sessionStorage.setItem("placas", this.value);
+      updateVehicleSummary();
     });
+
+    function updateVehicleSummary() {
+      const marcaVehiculo = sessionStorage.getItem('marca_vehiculo') || 'N/A';
+      const color = sessionStorage.getItem('color') || 'N/A';
+      const placas = sessionStorage.getItem('placas') || 'N/A';
+      document.getElementById('resumen_vehiculo').innerText = `Vehículo: ${marcaVehiculo}, Color: ${color}, Placas: ${placas}`;
+    }
 
     // On page load, retrieve and display the stored data
     window.addEventListener('load', () => {
       const clienteId = sessionStorage.getItem('clienteId');
       const servicioId = sessionStorage.getItem('servicioId');
       const empleadoId = sessionStorage.getItem('empleadoId');
-      const marcaVehiculo = sessionStorage.getItem('marca_vehiculo'); // Recupera marca del vehículo
-      const color = sessionStorage.getItem('color');
-      const placas = sessionStorage.getItem('placas');
 
       // Muestra el ID del cliente
       if (clienteId) document.getElementById('resumen_cliente').innerText = clienteId;
@@ -360,14 +357,11 @@
       // Muestra el ID del empleado
       if (empleadoId) document.getElementById('resumen_empleado').innerText = empleadoId;
 
-      // Muestra la información del vehículo (marca, color, placas)
-      if (marcaVehiculo || color || placas) {
-        document.getElementById('resumen_vehiculo').innerText = `Vehículo: ${marcaVehiculo || 'N/A'}, Color: ${color || 'N/A'}, Placas: ${placas || 'N/A'}`;
-      }
+      // Actualiza el resumen del vehículo con los datos guardados o con N/A si están vacíos
+      updateVehicleSummary();
     });
 
   </script>
-
 
 </body>
 

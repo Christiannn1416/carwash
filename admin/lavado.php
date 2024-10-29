@@ -77,5 +77,6 @@ switch ($accion) {
     default:
         $lavados = $app->readAll();
         require_once("views/lavado/index.php");
+
 }
 ?>
