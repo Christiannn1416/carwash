@@ -1,3 +1,4 @@
+<?php require('views/header_admin.php') ?>
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -88,7 +89,6 @@
 
 <body>
   <form id="regForm" action="/action_page.php">
-    <?php require('views/header_admin.php') ?>
     <h1>Nuevo Lavado:</h1>
     <!-- Seleccionar cliente -->
     <div class="tab">
@@ -181,7 +181,7 @@
 
     <!-- Seleccionar empleado -->
     <div class="tab">
-      Empleado:
+      <h3>Empleado</h3>
       <div class="container text-center">
         <div class="row row-cols-3">
           <?php foreach ($empleados as $empleado): ?>
@@ -192,6 +192,27 @@
                   <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
                   <input class="btn btn-primary seleccionar-empleado" type="button" value="Asignar"
                     data-empleado="<?php echo $empleado['id_empleado']; ?>">
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+
+    <!-- Producto extra -->
+    <div class="tab">
+      <h3>Producto extra:</h3>
+      <div class="container text-center">
+        <div class="row row-cols-3">
+          <?php foreach ($productos as $producto): ?>
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="<?php echo $producto['producto']; ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
+                  <p class="card-text"><?php echo $producto['descripcion']; ?></p>
+                  <p class="card-text">$<?php echo $producto['precio']; ?></p>
                 </div>
               </div>
             </div>
@@ -220,6 +241,7 @@
     </div>
     <!-- Circles which indicates the steps of the form: -->
     <div style="text-align: center; margin-top: 40px">
+      <span class="step"></span>
       <span class="step"></span>
       <span class="step"></span>
       <span class="step"></span>

@@ -1,11 +1,14 @@
 <?php
 require_once('empleado.class.php');
+require_once('usuario.class.php');
 $app = new Empleado();
+$appusuario = new Usuario();
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
 switch ($accion) {
     case 'crear':
+        $usuarios = $appusuario->readAll();
         require_once("views/empleado/crear.php");
         break;
     case 'nuevo':
@@ -23,6 +26,7 @@ switch ($accion) {
         break;
     case 'actualizar':
         $empleados = $app->readOne($id);
+        $usuarios = $appusuario->readAll();
         require_once('views/empleado/crear.php');
         break;
 

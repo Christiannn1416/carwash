@@ -33,5 +33,21 @@ endif; ?>" method="post">
             endif; ?>" />
         </div>
     </div>
+    <div class="row mb-3">
+        <label for="id_usuario" class="col-sm-2 col-form-label">Id_usuario</label>
+        <select name="data[id_usuario]" id="" class="form-select">
+            <?php foreach ($usuarios as $usuario): ?>
+                <?php
+                $selected = "";
+                if ($empleados['id_usuario'] == $usuario['id_usuario']) {
+                    $selected = "selected";
+                }
+                ?>
+                <option value="<?php echo ($usuario['id_usuario']); ?>" <?php echo ($selected); ?>>
+                    <?php echo ($usuario['usuario']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
     <input type="submit" name="data[enviar]" value="Guardar" class="btn btn-success" />
 </form>
