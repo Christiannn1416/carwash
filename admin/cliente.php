@@ -31,8 +31,8 @@ switch ($accion) {
             $mensaje = "Ocurrió un error al agregar";
             $tipo = "danger";
         }
-        $clientes = $app->readAll();
-        require_once('views/lavado/crear.php');
+        header("Location: /carwash/admin/lavado.php?accion=crear");
+        exit();
         break;
     case 'actualizar':
         $clientes = $app->readOne($id);
