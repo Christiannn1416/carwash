@@ -13,6 +13,7 @@ switch ($accion) {
         break;
     case 'nuevo':
         $data = $_POST['data'];
+        print_r($_FILES);
         $resultado = $app->create($data);
         if ($resultado) {
             $mensaje = "El empleado se ha agregado correctamente";

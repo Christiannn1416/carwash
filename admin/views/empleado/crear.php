@@ -28,9 +28,10 @@ endif; ?>" method="post">
     <div class="row mb-3">
         <label for="foto" class="col-sm-2 col-form-label">Foto</label>
         <div class="col-sm-10">
-            <input type="text" name="data[foto]" placeholder="Foto" class="form-control" value="<?php if (isset($empleados['foto'])):
-                echo ($empleados['foto']);
-            endif; ?>" />
+            <label for="fotografia" class="col-sm-2 col-form-label">Fotografía</label>
+            <div class="col-sm-10">
+                <input type="file" name="fotografia" placeholder="URL de la fotografía" class="form-control" value="" />
+            </div>
         </div>
     </div>
     <div class="row mb-3">

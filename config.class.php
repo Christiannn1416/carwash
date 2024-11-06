@@ -4,5 +4,5 @@ define("DBHOST", 'localhost');
 define("DBNAME", 'carwash');
 define("DBUSER", 'carwash');
 define("DBPASS", '123');
-define("DBPORT", '3306');
+define("DBPORT", '3307');
 ?>
