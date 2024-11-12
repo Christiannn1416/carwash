@@ -11,12 +11,15 @@ switch ($accion) {
     case 'nuevo':
         $data = $_POST['data'];
         $resultado = $app->create($data);
-        if ($resultado) {
-            $mensaje = "El cliente se ha agregado correctamente";
-            $tipo = "success";
-        } else {
+        if ($resultado == 1) {
+            $mensaje = "Una disculpa, el correo electrónico ya ha sido registrado";
+            $tipo = "warning";
+        } elseif ($resultado == 2) {
             $mensaje = "Ocurrió un error al agregar";
             $tipo = "danger";
+        } else {
+            $mensaje = "El Cliente se ha agregado correctamente";
+            $tipo = "success";
         }
         $clientes = $app->readAll();
         require_once('views/cliente/index.php');

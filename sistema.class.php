@@ -1,4 +1,6 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
 session_start();
 include('config.class.php');
 class Sistema
@@ -109,6 +111,29 @@ class Sistema
             require_once('views/header.php');
             $this->alert($tipo, $mensaje);
             die();
+        }
+    }
+    function sendMail($destinatario, $asunto, $mensaje)
+    {
+        require 'vendor/autoload.php';
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->SMTPDebug = SMTP::DEBUG_OFF;
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 465;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->SMTPAuth = true;
+        $mail->Username = '20030435@itcelaya.edu.mx';
+        $mail->Password = 'iqrxjrzieqtrteph';
+        $mail->setFrom('20030435@itcelaya.edu.mx', 'Christian Muñoz');
+        $mail->addAddress($destinatario, 'Sistema CarWash');
+        $mail->Subject = $asunto;
+        $mail->msgHTML($mensaje);
+        $mail->addAttachment('images/phpmailer_mini.png');
+        if (!$mail->send()) {
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Message sent!';
         }
     }
 }

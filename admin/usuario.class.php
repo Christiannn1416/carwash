@@ -33,6 +33,7 @@ class Usuario extends Sistema
                     $insertar_rol->execute();
                 }
                 $this->con->commit();
+                $this->sendMail($data['correo'], 'Bienvenido a CarWash', 'Bienvenido al Sistema');
                 return $insertar->rowCount();
             }
         } catch (Exception $e) {

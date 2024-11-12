@@ -8,7 +8,7 @@ endif; ?>empleado</h1>
     echo ('nuevo');
 else:
     echo ('modificar&id=' . $id);
-endif; ?>" method="post">
+endif; ?>" method="post" enctype="multipart/form-data">
     <div class="row mb-3">
         <label for="empleado" class="col-sm-2 col-form-label">Nombre del empleado</label>
         <div class="col-sm-10">

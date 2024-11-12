@@ -7,18 +7,37 @@ class Cliente extends Sistema
     {
         $result = [];
         $this->conexion();
-        $sql = "insert into clientes(cliente,telefono,correo) values
-                                    (:cliente,
-                                    :telefono,
-                                    :correo);";
-        $insertar = $this->con->prepare($sql);
-        $insertar->bindParam(':cliente', $data['cliente'], PDO::PARAM_STR);
-        $insertar->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
-        $insertar->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
-        $insertar->execute();
-        $result = $insertar->rowCount();
-        return $result;
+        $this->con->beginTransaction();
+        try {
+            $sql_check = "select count(*) from clientes where correo = :correo";
+            $check = $this->con->prepare($sql_check);
+            $check->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+            $check->execute();
+            $emailexists = $check->fetchColumn();
+            if ($emailexists > 0) {
+                $msj = 3;
+                return $msj;
+            } else {
+                $sql = "insert into clientes(cliente, telefono, correo) VALUES
+                                        (:cliente, :telefono, :correo)";
+                $insertar = $this->con->prepare($sql);
+                $insertar->bindParam(':cliente', $data['cliente'], PDO::PARAM_STR);
+                $insertar->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
+                $insertar->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+                $insertar->execute();
+                $this->sendMail($data['correo'], 'Bienvenido a CarWash', 'Gracias por unirte a nuestros clientes, ahora puedes pasar por tu tarjeta
+                                                                        a las instalaciones para poder iniciar a ganar descuentos y regalos. :)');
+                $this->con->commit();
+                $result = $insertar->rowCount();
+                return $result;
+            }
+        } catch (Exception $e) {
+            $this->con->rollBack();
+            $msj = 2;
+            return $msj;
+        }
     }
+
 
     function update($id, $data)
     {
