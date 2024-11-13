@@ -14,9 +14,10 @@ class Producto extends Sistema
                 :precio,
                 :stock);";
         $insertar = $this->con->prepare($sql);
+        $fotografia = $this->uploadFoto();
         $insertar->bindParam(':producto', $data['producto'], PDO::PARAM_STR);
         $insertar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
-        $insertar->bindParam(':imagen', $data['imagen'], PDO::PARAM_STR);
+        $insertar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
         $insertar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
         $insertar->bindParam(':stock', $data['stock'], PDO::PARAM_INT);
         $insertar->execute();
@@ -28,24 +29,31 @@ class Producto extends Sistema
     {
         $this->conexion();
         $result = [];
-        $sql = "update productos set 
+        $tmp = "";
+        if ($_FILES['imagen']['error'] != 4) {
+            $fotografia = $this->uploadFoto();
+            $tmp = "imagen=:imagen,";
+            $sql = 'update productos set 
                                     producto=:producto,
                                     descripcion=:descripcion,
-                                    imagen=:imagen,
+                                    ' . $tmp . '
                                     precio=:precio,
                                     stock=:stock
                                     where id_producto=:id_producto;
-                                     ";
-        $modificar = $this->con->prepare($sql);
-        $modificar->bindParam(':id_producto', $id, PDO::PARAM_INT);
-        $modificar->bindParam(':producto', $data['producto'], PDO::PARAM_STR);
-        $modificar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
-        $modificar->bindParam(':imagen', $data['imagen'], PDO::PARAM_STR);
-        $modificar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
-        $modificar->bindParam(':stock', $data['stock'], PDO::PARAM_INT);
-        $modificar->execute();
-        $result = $modificar->rowCount();
-        return $result;
+                                     ';
+            $modificar = $this->con->prepare($sql);
+            $modificar->bindParam(':id_producto', $id, PDO::PARAM_INT);
+            $modificar->bindParam(':producto', $data['producto'], PDO::PARAM_STR);
+            $modificar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
+            if ($_FILES['imagen']['error'] != 4) {
+                $modificar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
+            }
+            $modificar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
+            $modificar->bindParam(':stock', $data['stock'], PDO::PARAM_INT);
+            $modificar->execute();
+            $result = $modificar->rowCount();
+            return $result;
+        }
     }
 
     function delete($id)
@@ -80,5 +88,26 @@ class Producto extends Sistema
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    function uploadFoto()
+    {
+        $tipos = array("image/jpeg", "image/png", "image/gif");
+        $data = $_FILES['imagen'];
+        $default = "default.png";
+        if ($data['error'] == 0) {
+            if ($data['size'] <= 1048576) {
+                if (in_array($data['type'], $tipos)) {
+                    $n = rand(1, 1000000);
+                    $nombre = explode('.', $data['name']);
+                    $imagen = md5($n . $nombre[0]) . "." . $nombre[sizeof($nombre) - 1];
+                    $origen = $data['tmp_name'];
+                    $destino = "C:\\wamp64\\www\\carwash\\uploads\\" . $imagen;
+                    if (move_uploaded_file($origen, $destino)) {
+                        return $imagen;
+                    }
+                    return $default;
+                }
+            }
+        }
+        return $default;
+    }
 }
-?>

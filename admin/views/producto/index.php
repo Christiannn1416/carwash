@@ -21,10 +21,15 @@ endif; ?>
         <?php foreach ($productos as $producto): ?>
             <div class="col">
                 <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="<?php echo $producto['producto']; ?>">
+                    <img src="<?php
+                    if (file_exists("../uploads/" . $producto['imagen'])) {
+                        echo ("../uploads/" . $producto['imagen']);
+                    } else {
+                        echo ("../uploads/default.png");
+                    }
+                    ?> " class="card-img-top" alt="<?php echo $producto['imagen']; ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
-                        <p class="card-text"><?php echo $producto['descripcion']; ?></p>
                         <p class="card-text">$<?php echo $producto['precio']; ?></p>
                         <a href="producto.php?accion=actualizar&id=<?php echo $producto['id_producto']; ?>"
                             class="btn btn-primary">Editar</a>
