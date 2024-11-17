@@ -88,10 +88,12 @@
 </style>
 
 <body>
-  <form id="regForm" action="/action_page.php">
+  <form id="regForm" action="lavado.php?accion=<?php if ($accion == "crear"):
+    echo ('nuevo');
+  endif; ?>" method="post">
     <h1>Nuevo Lavado:</h1>
     <!-- Seleccionar cliente -->
-    <div class="tab">
+     <div class="tab">
       Clientes:
 
       <?php if (isset($mensaje)):
@@ -114,39 +116,40 @@
             <tbody>
               <?php foreach ($clientes as $cliente): ?>
                 <tr>
-                  <th scope="row"><?php echo $cliente['id_cliente']; ?> </th>
+                  <th scope="row"><?php echo $cliente['id_cliente']; ?></th>
                   <td><?php echo $cliente['cliente']; ?></td>
                   <td><?php echo $cliente['telefono']; ?></td>
                   <td><?php echo $cliente['correo']; ?></td>
                   <td>
-                    <input class="btn btn-primary seleccionar-btn" type="button" value="Seleccionar"
-                      data-id="<?php echo $cliente['id_cliente']; ?>">
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-
-    </div>
+                    <!-- Botón para seleccionar cliente -->
+      <input type="radio" name="data[id_cliente]" value="<?php echo $cliente['id_cliente']; ?>" <?php if (isset($_POST['data']['id_cliente']) && $_POST['data']['id_cliente'] == $cliente['id_cliente'])
+           echo 'checked'; ?>><label for="" class="m-auto">Seleccionar</label>
+      </td>
+      </td>
+      </tr>
+    <?php endforeach; ?>
+    </tbody>
+    </table>
+    </div> 
 
     <!-- Info Carro -->
     <div class="tab">
       <p>
         <label for="Carro" class="col-sm-2 col-form-label">Carro</label>
-        <input placeholder="Carro" name="marca_vehiculo" id="marca_vehiculo" oninput="this.className = ''">
+        <input placeholder="Carro" name="data[marca_vehiculo]" id="marca_vehiculo" oninput="this.className = ''">
       </p>
       <p>
         <label for="id_cliente" class="col-sm-2 col-form-label">Color</label>
-        <input placeholder="Color" name="color" id="color" oninput="this.className = ''">
+        <input placeholder="Color" name="data[color]" id="color" oninput="this.className = ''">
       </p>
       <p>
         <label for="placas" class="col-sm-2 col-form-label">Placas</label>
-        <input placeholder="Placas" name="placas" id="placas" oninput="this.className = ''">
+        <input placeholder="Placas" name="data[placas]" id="placas" oninput="this.className = ''">
       </p>
-    </div>
+    </div> 
 
     <!-- Seleccionar servicio -->
-    <div class="tab">
+     <div class="tab">
       Servicio:
       <div class="container text-center">
         <div class="row row-cols-3">
@@ -157,27 +160,25 @@
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $servicio['servicio']; ?></h5>
                   <p class="card-text"><?php echo $servicio['descripcion']; ?></p>
-                  <input class="btn btn-primary seleccionar-servicio" type="button"
-                    value="Uber/Taxi $<?php echo $servicio['p_ubertaxi']; ?>"
+                  <input type="radio" value="<?php echo $servicio['id_servicio']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>" data-precio="<?php echo $servicio['p_ubertaxi']; ?>"
+                    name="data[id_servicio]">
+                  <input seleccionar-servicio" type="radio" value="<?php echo $servicio['id_servicio']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>" data-precio="<?php echo $servicio['p_carro']; ?>"
+                    name="data[id_servicio]">
+                  <input seleccionar-servicio" type="radio" value="<?php echo $servicio['id_servicio']; ?>"
                     data-id="<?php echo $servicio['id_servicio']; ?>"
-                    data-precio="<?php echo $servicio['p_ubertaxi']; ?>">
-                  <input class="btn btn-primary seleccionar-servicio" type="button"
-                    value="Carro $<?php echo $servicio['p_carro']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
-                    data-precio="<?php echo $servicio['p_carro']; ?>">
-                  <input class="btn btn-primary seleccionar-servicio" type="button"
-                    value="Camioneta $<?php echo $servicio['p_camioneta']; ?>"
-                    data-id="<?php echo $servicio['id_servicio']; ?>"
-                    data-precio="<?php echo $servicio['p_camioneta']; ?>">
-                  <input class="btn btn-primary seleccionar-servicio" type="button"
-                    value="Van $<?php echo $servicio['p_van']; ?>" data-id="<?php echo $servicio['id_servicio']; ?>"
-                    data-precio="<?php echo $servicio['p_van']; ?>">
+                    data-precio="<?php echo $servicio['p_camioneta']; ?>" name="data[id_servicio]">
+                  <input seleccionar-servicio" type="radio" value="<?php echo $servicio['id_servicio']; ?>"
+                    data-id="<?php echo $servicio['id_servicio']; ?>" data-precio="<?php echo $servicio['p_van']; ?>"
+                    name="data[id_servicio]">
                 </div>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
       </div>
-    </div>
+    </div>   
 
     <!-- Seleccionar empleado -->
     <div class="tab">
@@ -190,34 +191,50 @@
                 <img src="..." class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
-                  <input class="btn btn-primary seleccionar-empleado" type="button" value="Asignar"
-                    data-empleado="<?php echo $empleado['id_empleado']; ?>">
+                  <input type="radio" value="<?php echo $empleado['id_empleado']; ?>"
+                    data-empleado="<?php echo $empleado['id_empleado']; ?>" name="data[empleado]">
                 </div>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
       </div>
-    </div>
+    </div>  
 
     <!-- Producto extra -->
     <div class="tab">
       <h3>Producto extra:</h3>
       <div class="container text-center">
-        <div class="row row-cols-3">
+        <div class="row row-cols-5">
           <?php foreach ($productos as $producto): ?>
             <div class="col">
-              <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="<?php echo $producto['producto']; ?>">
+              <div class="card">
+                <img src="<?php
+                if (file_exists("../uploads/" . $producto['imagen'])) {
+                  echo ("../uploads/" . $producto['imagen']);
+                } else {
+                  echo ("../uploads/default.png");
+                }
+                ?> " class="card-img-top" alt="<?php echo $producto['imagen']; ?>">
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
                   <p class="card-text"><?php echo $producto['descripcion']; ?></p>
                   <p class="card-text">$<?php echo $producto['precio']; ?></p>
                 </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="<?php echo $producto['id_producto']; ?>"
+                    id="flexCheckDefault_<?php echo $producto['id_producto']; ?>" name="producto[<?php echo $producto['id_producto']; ?>][seleccionado]" 
+                    <?php echo (in_array($producto['id_producto'], $misproductos) ? 'checked' : ''); ?>>
+                  <label class="form-check-label" for="flexCheckDefault_<?php echo $producto['id_producto']; ?>">
+                    Seleccionar
+                  </label>
+                  <input type="number" name="producto[<?php echo $producto['id_producto']; ?>][cantidad]" min="0">
+                </div>
               </div>
             </div>
           <?php endforeach; ?>
         </div>
+
       </div>
     </div>
 
@@ -282,6 +299,7 @@
       showTab(currentTab);
     }
 
+
     function validateForm() {
       let tabs = document.getElementsByClassName("tab");
       let inputs = tabs[currentTab].getElementsByTagName("input");
@@ -312,6 +330,7 @@
         document.getElementById('resumen_cliente').innerText = clienteId;
         sessionStorage.setItem('clienteId', clienteId);
 
+
         // Si el cliente es nuevo, borrar datos previos del vehículo
         if (previousClientId !== clienteId) {
           sessionStorage.removeItem('marca_vehiculo');
@@ -333,6 +352,9 @@
         sessionStorage.setItem('servicioId', servicioId);
       });
     });
+    function selectCliente(id_cliente) {
+      document.getElementById('id_cliente').value = id_cliente;
+    }
 
     const seleccionarEmpleados = document.querySelectorAll('.seleccionar-empleado');
     seleccionarEmpleados.forEach(empleado => {

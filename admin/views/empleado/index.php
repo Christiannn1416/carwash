@@ -10,7 +10,7 @@ endif; ?>
     <div class="row row-cols-3">
         <div class="col">
             <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="icons/boton-agregar.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Nuevo Empleado.</h5>
                     <p class="card-text">Agrega un nuevo empleado.</p>

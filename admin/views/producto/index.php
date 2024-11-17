@@ -7,10 +7,10 @@ endif; ?>
 <h1 class="text-center">Productos</h1>
 
 <div class="container text-center">
-    <div class="row row-cols-3">
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+    <div class="row row-cols-6">
+        <div class="col-sm-2">
+            <div class="card">
+                <img src="icons/boton-agregar.png" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title">Nuevo Producto.</h5>
                     <p class="card-text">Agrega un nuevo producto.</p>
@@ -19,8 +19,8 @@ endif; ?>
             </div>
         </div>
         <?php foreach ($productos as $producto): ?>
-            <div class="col">
-                <div class="card" style="width: 18rem;">
+            <div class="col-sm-2">
+                <div class="card">
                     <img src="<?php
                     if (file_exists("../uploads/" . $producto['imagen'])) {
                         echo ("../uploads/" . $producto['imagen']);

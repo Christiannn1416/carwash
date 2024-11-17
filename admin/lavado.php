@@ -18,6 +18,7 @@ switch ($accion) {
         $servicios = $appservicio->readAll();
         $empleados = $appempleado->readAll();
         $productos = $appproducto->readAll();
+        $misproductos = $app->readAllProductos($id);
         require_once("views/lavado/crear.php");
         break;
     case 'crear_cliente_lavado':
@@ -28,7 +29,7 @@ switch ($accion) {
         require_once("views/lavado/crear_cliente_lavado.php");
         break;
     case 'nuevo':
-        $data = $_POST['data'];
+        $data = $_POST;
         $resultado = $app->create($data);
         if ($resultado) {
             $mensaje = "El lavado se ha agregado correctamente";

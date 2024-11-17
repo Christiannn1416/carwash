@@ -7,6 +7,8 @@ class Lavado extends Sistema
     {
         $result = [];
         $this->conexion();
+        $data = $data['data'];
+        $producto = $_POST['producto'];
         $sql = "insert into lavados(id_cliente,id_servicio,marca_vehiculo,color,placas)
                                     values(:id_cliente,
                                             :id_servicio,
@@ -20,8 +22,24 @@ class Lavado extends Sistema
         $insertar->bindParam(':color', $data['color'], PDO::PARAM_STR);
         $insertar->bindParam(':placas', $data['placas'], PDO::PARAM_STR);
         $insertar->execute();
-        $result = $insertar->rowCount();
-        return $result;
+
+        $id_lavado = $this->con->lastInsertId();
+        if (!is_null(($id_lavado))) {
+            foreach ($producto as $id_producto => $datos) {
+                // Verifica si el producto está seleccionado y si la cantidad es válida
+                if (isset($datos['seleccionado']) && !empty($datos['cantidad'])) {
+                    $sql = "INSERT INTO lavadoproductos (id_lavado, id_producto, cantidad)
+                            VALUES (:id_lavado, :id_producto, :cantidad);";
+                    $insertar_rol = $this->con->prepare($sql);
+                    $insertar_rol->bindParam(':id_lavado', $id_lavado, PDO::PARAM_INT);
+                    $insertar_rol->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
+                    $insertar_rol->bindParam(':cantidad', $datos['cantidad'], PDO::PARAM_INT);
+                    $insertar_rol->execute();
+                }
+            }
+            $result = $insertar->rowCount();
+            return $result;
+        }
     }
 
     function update($id, $data)
@@ -64,6 +82,23 @@ class Lavado extends Sistema
         $sql->execute();
         $result = $sql->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    function readAllProductos($id)
+    {
+        $this->conexion();
+        $sql = "select distinct p.id_producto from productos p join lavadoproductos lp on p.id_producto = lp.id_producto 
+                join lavados l on lp.id_lavado = l.id_lavado where l.id_lavado=:id_lavado;";
+        $consulta = $this->con->prepare($sql);
+        $consulta->bindParam(':id_lavado', $id, PDO::PARAM_INT);
+        $consulta->execute();
+        $roles = [];
+        $productos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        $data = [];
+        foreach ($productos as $producto) {
+            array_push($data, $producto['id_producto']);
+        }
+        return $data;
     }
 }
 ?>
