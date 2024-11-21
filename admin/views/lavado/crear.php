@@ -89,7 +89,7 @@
 
 <body>
   <form id="regForm" action="lavado.php?accion=<?php if ($accion == "crear"):
-    echo ('nuevo');
+    echo ('resumen');
   endif; ?>" method="post">
     <h1>Nuevo Lavado:</h1>
     <!-- Seleccionar cliente -->
@@ -122,7 +122,7 @@
                   <td><?php echo $cliente['correo']; ?></td>
                   <td>
                     <!-- Botón para seleccionar cliente -->
-      <input type="radio" name="data[id_cliente]" value="<?php echo $cliente['id_cliente']; ?>" <?php if (isset($_POST['data']['id_cliente']) && $_POST['data']['id_cliente'] == $cliente['id_cliente'])
+      <input id="id_cliente" type="radio" name="data[id_cliente]" value="<?php echo $cliente['id_cliente']; ?>" <?php if (isset($_POST['data']['id_cliente']) && $_POST['data']['id_cliente'] == $cliente['id_cliente'])
            echo 'checked'; ?>><label for="" class="m-auto">Seleccionar</label>
       </td>
       </td>
@@ -136,15 +136,15 @@
     <div class="tab">
       <p>
         <label for="Carro" class="col-sm-2 col-form-label">Carro</label>
-        <input placeholder="Carro" name="data[marca_vehiculo]" id="marca_vehiculo" oninput="this.className = ''">
+        <input placeholder="Carro" name="data[marca_vehiculo]" id="marca_vehiculo" require>
       </p>
       <p>
         <label for="id_cliente" class="col-sm-2 col-form-label">Color</label>
-        <input placeholder="Color" name="data[color]" id="color" oninput="this.className = ''">
+        <input placeholder="Color" name="data[color]" id="color" require>
       </p>
       <p>
         <label for="placas" class="col-sm-2 col-form-label">Placas</label>
-        <input placeholder="Placas" name="data[placas]" id="placas" oninput="this.className = ''">
+        <input placeholder="Placas" name="data[placas]" id="placas" require>
       </p>
     </div> 
 
@@ -192,7 +192,7 @@
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
                   <input type="radio" value="<?php echo $empleado['id_empleado']; ?>"
-                    data-empleado="<?php echo $empleado['id_empleado']; ?>" name="data[empleado]">
+                    data-empleado="<?php echo $empleado['id_empleado']; ?>" name="data[id_empleado]">
                 </div>
               </div>
             </div>
@@ -228,7 +228,7 @@
                   <label class="form-check-label" for="flexCheckDefault_<?php echo $producto['id_producto']; ?>">
                     Seleccionar
                   </label>
-                  <input type="number" name="producto[<?php echo $producto['id_producto']; ?>][cantidad]" min="0">
+                  <input type="number" name="producto[<?php echo $producto['id_producto']; ?>][cantidad]">
                 </div>
               </div>
             </div>
@@ -239,13 +239,14 @@
     </div>
 
     <!-- Resumen -->
-    <div class="tab">
-      <h3>Resumen:</h3>
-      <p>Cliente ID: <span id="resumen_cliente"></span></p>
-      <p>Carro: <span id="resumen_vehiculo"></span></p>
-      <p>Servicio: <span id="resumen_servicio"></span></p>
-      <p>Empleado: <span id="resumen_empleado"></span></p>
-    </div>
+<div class="tab">
+  <h3>Resumen:</h3>
+  <p>Cliente ID: </p>
+  <p>Vehículo: </p>
+  <p>Servicio: </p>
+  <p>Empleado: </p>
+  <p>Otros Productos: <span id="resumenProductos"></span></p>
+</div>
 
     <!--  -->
     <div style="overflow: auto">
@@ -304,9 +305,10 @@
       let tabs = document.getElementsByClassName("tab");
       let inputs = tabs[currentTab].getElementsByTagName("input");
       let valid = true;
+      let idsPermitidos = ["marca_vehiculo", "color", "placas"];
       for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].value === "") {
-          inputs[i].className += " invalid";
+        if (inputs[i].value === "" && idsPermitidos.includes(inputs[i].id)) {
+          inputs[i].className += "invalid";
           valid = false;
         }
       }
@@ -320,90 +322,6 @@
       }
       steps[n].className += " active";
     }
-
-    // Handle the selection of clients, services, and employees
-    const seleccionarBtns = document.querySelectorAll('.seleccionar-btn');
-    seleccionarBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const clienteId = btn.getAttribute('data-id');
-        const previousClientId = sessionStorage.getItem('clienteId');
-        document.getElementById('resumen_cliente').innerText = clienteId;
-        sessionStorage.setItem('clienteId', clienteId);
-
-
-        // Si el cliente es nuevo, borrar datos previos del vehículo
-        if (previousClientId !== clienteId) {
-          sessionStorage.removeItem('marca_vehiculo');
-          sessionStorage.removeItem('color');
-          sessionStorage.removeItem('placas');
-
-          // Actualizar el resumen del vehículo a N/A solo si se cambia de cliente
-          document.getElementById('resumen_vehiculo').innerText = 'Vehículo: N/A, Color: N/A, Placas: N/A';
-        }
-      });
-    });
-
-    const seleccionarServicios = document.querySelectorAll('.seleccionar-servicio');
-    seleccionarServicios.forEach(servicio => {
-      servicio.addEventListener('click', () => {
-        const servicioId = servicio.getAttribute('data-id');
-        const precio = servicio.getAttribute('data-precio');
-        document.getElementById('resumen_servicio').innerText = `Servicio ID: ${servicioId}, Precio: $${precio}`;
-        sessionStorage.setItem('servicioId', servicioId);
-      });
-    });
-    function selectCliente(id_cliente) {
-      document.getElementById('id_cliente').value = id_cliente;
-    }
-
-    const seleccionarEmpleados = document.querySelectorAll('.seleccionar-empleado');
-    seleccionarEmpleados.forEach(empleado => {
-      empleado.addEventListener('click', () => {
-        const empleadoId = empleado.getAttribute('data-empleado');
-        document.getElementById('resumen_empleado').innerText = empleadoId;
-        sessionStorage.setItem('empleadoId', empleadoId);
-      });
-    });
-
-    // Guarda los datos del vehículo en el momento en que se cambian
-    document.getElementById("marca_vehiculo").addEventListener("change", function () {
-      sessionStorage.setItem("marca_vehiculo", this.value);
-      updateVehicleSummary();
-    });
-    document.getElementById("color").addEventListener("change", function () {
-      sessionStorage.setItem("color", this.value);
-      updateVehicleSummary();
-    });
-    document.getElementById("placas").addEventListener("change", function () {
-      sessionStorage.setItem("placas", this.value);
-      updateVehicleSummary();
-    });
-
-    function updateVehicleSummary() {
-      const marcaVehiculo = sessionStorage.getItem('marca_vehiculo') || 'N/A';
-      const color = sessionStorage.getItem('color') || 'N/A';
-      const placas = sessionStorage.getItem('placas') || 'N/A';
-      document.getElementById('resumen_vehiculo').innerText = `Vehículo: ${marcaVehiculo}, Color: ${color}, Placas: ${placas}`;
-    }
-
-    // On page load, retrieve and display the stored data
-    window.addEventListener('load', () => {
-      const clienteId = sessionStorage.getItem('clienteId');
-      const servicioId = sessionStorage.getItem('servicioId');
-      const empleadoId = sessionStorage.getItem('empleadoId');
-
-      // Muestra el ID del cliente
-      if (clienteId) document.getElementById('resumen_cliente').innerText = clienteId;
-
-      // Muestra la información del servicio
-      if (servicioId) document.getElementById('resumen_servicio').innerText = `Servicio ID: ${servicioId}`;
-
-      // Muestra el ID del empleado
-      if (empleadoId) document.getElementById('resumen_empleado').innerText = empleadoId;
-
-      // Actualiza el resumen del vehículo con los datos guardados o con N/A si están vacíos
-      updateVehicleSummary();
-    });
 
   </script>
 

@@ -28,6 +28,9 @@ switch ($accion) {
         $productos = $appproducto->readAll();
         require_once("views/lavado/crear_cliente_lavado.php");
         break;
+    case 'resumen':
+        $resumen = $app->resumen();
+        break;
     case 'nuevo':
         $data = $_POST;
         $resultado = $app->create($data);
@@ -74,6 +77,26 @@ switch ($accion) {
         }
         $lavados = $app->readAll();
         require_once("views/lavado/index.php");
+        break;
+    case 'cambiarestado':
+        if (!is_null($id)) {
+            if (is_numeric($id)) {
+                $resultado = $app->cambiarEstado($id);
+                if ($resultado) {
+                    $mensaje = "El Estado se ha cambiado a Terminado";
+                    $tipo = "success";
+                } else {
+                    $mensaje = "Ocurrió un error";
+                    $tipo = "danger";
+                }
+            }
+        }
+        $lavados = $app->readAll();
+        require_once("views/lavado/index.php");
+        break;
+    case 'resumen':
+
+        require_once("views/lavado/resumen.php");
         break;
     default:
         $lavados = $app->readAll();
