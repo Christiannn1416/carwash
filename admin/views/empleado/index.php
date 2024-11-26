@@ -7,7 +7,7 @@ endif; ?>
 <h1 class="text-center">Empleados</h1>
 
 <div class="container text-center">
-    <div class="row row-cols-3">
+    <div class="row row-cols-4">
         <div class="col">
             <div class="card" style="width: 18rem;">
                 <img src="icons/boton-agregar.png" class="card-img-top" alt="...">
@@ -27,7 +27,7 @@ endif; ?>
                     } else {
                         echo ("../uploads/default.png");
                     }
-                    ?> " class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
+                    ?> " class="w-75 m-auto p-2" alt="<?php echo $empleado['empleado']; ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
                         <p class="card-text"><?php echo $empleado['telefono']; ?></p>
@@ -35,6 +35,8 @@ endif; ?>
                             class="btn btn-primary">Editar</a>
                         <a href="empleado.php?accion=eliminar&id=<?php echo $empleado['id_empleado']; ?>"
                             class="btn btn-danger">Eliminar</a>
+                        <a href="empleado.php?accion=&id=<?php echo $empleado['id_empleado']; ?>"
+                            class="btn btn-success">Imprimir</a>
                     </div>
                 </div>
             </div>

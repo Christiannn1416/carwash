@@ -27,10 +27,11 @@ endif; ?>
                     } else {
                         echo ("../uploads/default.png");
                     }
-                    ?> " class="card-img-top" alt="<?php echo $producto['imagen']; ?>">
+                    ?> " class="card-img-top p-3 m-auto" alt="<?php echo $producto['imagen']; ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
                         <p class="card-text">$<?php echo $producto['precio']; ?></p>
+                        <p class="card-text">Stock: <?php echo $producto['stock']; ?></p>
                         <a href="producto.php?accion=actualizar&id=<?php echo $producto['id_producto']; ?>"
                             class="btn btn-primary">Editar</a>
                         <a href="producto.php?accion=eliminar&id=<?php echo $producto['id_producto']; ?>"

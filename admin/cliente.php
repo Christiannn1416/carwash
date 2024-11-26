@@ -12,14 +12,14 @@ switch ($accion) {
         $data = $_POST['data'];
         $resultado = $app->create($data);
         if ($resultado == 1) {
-            $mensaje = "Una disculpa, el correo electrónico ya ha sido registrado";
-            $tipo = "warning";
+            $mensaje = "El Cliente se ha agregado correctamente";
+            $tipo = "success";
         } elseif ($resultado == 2) {
             $mensaje = "Ocurrió un error al agregar";
             $tipo = "danger";
         } else {
-            $mensaje = "El Cliente se ha agregado correctamente";
-            $tipo = "success";
+            $mensaje = "Una disculpa, el correo electrónico ya ha sido registrado";
+            $tipo = "warning";
         }
         $clientes = $app->readAll();
         require_once('views/cliente/index.php');

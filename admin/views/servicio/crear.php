@@ -27,44 +27,10 @@ endif; ?>" method="post">
         </div>
     </div>
     <div class="row mb-3">
-        <label for="p_ubertaxi" class="col-sm-2 col-form-label">Precio Uber/Taxi</label>
+        <label for="p_ubertaxi" class="col-sm-2 col-form-label">Precio</label>
         <div class="col-sm-10">
-            <input type="number" name="data[p_ubertaxi]" placeholder="Escribe aquí el precio" class="form-control"
-                value="<?php if (isset($servicios['p_ubertaxi'])):
-                    echo ($servicios['p_ubertaxi']);
-                endif; ?>" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="p_carro" class="col-sm-2 col-form-label">Precio Carro</label>
-        <div class="col-sm-10">
-            <input type="number" name="data[p_carro]" placeholder="Escribe aquí el precio" class="form-control" value="<?php if (isset($servicios['p_carro'])):
-                echo ($servicios['p_carro']);
-            endif; ?>" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="p_camioneta" class="col-sm-2 col-form-label">Precio Camioneta</label>
-        <div class="col-sm-10">
-            <input type="number" name="data[p_camioneta]" placeholder="Escribe aquí el precio" class="form-control"
-                value="<?php if (isset($servicios['p_camioneta'])):
-                    echo ($servicios['p_camioneta']);
-                endif; ?>" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="p_van" class="col-sm-2 col-form-label">Precio Van</label>
-        <div class="col-sm-10">
-            <input type="number" name="data[p_van]" placeholder="Escribe aquí el precio" class="form-control" value="<?php if (isset($servicios['p_van'])):
-                echo ($servicios['p_van']);
-            endif; ?>" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
-        <div class="col-sm-10">
-            <input type="text" name="data[imagen]" placeholder="Imagen" class="form-control" value="<?php if (isset($servicios['imagen'])):
-                echo ($servicios['imagen']);
+            <input type="number" name="data[precio]" placeholder="Escribe aquí el precio" class="form-control" value="<?php if (isset($servicios['precio'])):
+                echo ($servicios['precio']);
             endif; ?>" />
         </div>
     </div>

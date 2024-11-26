@@ -7,22 +7,14 @@ class Servicio extends Sistema
     {
         $result = [];
         $this->conexion();
-        $sql = "insert into servicios(servicio,descripcion,p_ubertaxi,p_carro,p_camioneta,p_van,imagen) 
+        $sql = "insert into servicios(servicio,descripcion,precio) 
                                     values (:servicio,
                                      :descripcion,
-                                     :p_ubertaxi,
-                                     :p_carro,
-                                     :p_camioneta,
-                                     :p_van,
-                                     :imagen)";
+                                     :precio)";
         $insertar = $this->con->prepare($sql);
         $insertar->bindParam(':servicio', $data['servicio'], PDO::PARAM_STR);
         $insertar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
-        $insertar->bindParam(':p_ubertaxi', $data['p_ubertaxi'], PDO::PARAM_INT);
-        $insertar->bindParam(':p_carro', $data['p_carro'], PDO::PARAM_INT);
-        $insertar->bindParam(':p_camioneta', $data['p_camioneta'], PDO::PARAM_INT);
-        $insertar->bindParam(':p_van', $data['p_van'], PDO::PARAM_INT);
-        $insertar->bindParam(':imagen', $data['imagen'], PDO::PARAM_STR);
+        $insertar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
         $insertar->execute();
         $result = $insertar->rowCount();
         return $result;
@@ -34,21 +26,13 @@ class Servicio extends Sistema
         $result = [];
         $sql = "update servicios set servicio=:servicio,
                                      descripcion=:descripcion,
-                                     p_ubertaxi=:p_ubertaxi,
-                                     p_carro=:p_carro,
-                                     p_camioneta=:p_camioneta,
-                                     p_van=:p_van,
-                                     imagen=:imagen 
+                                     precio=:precio
                                      where id_servicio=:id_servicio";
         $insertar = $this->con->prepare($sql);
         $insertar->bindParam(':id_servicio', $id, PDO::PARAM_INT);
         $insertar->bindParam(':servicio', $data['servicio'], PDO::PARAM_STR);
         $insertar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
-        $insertar->bindParam(':p_ubertaxi', $data['p_ubertaxi'], PDO::PARAM_INT);
-        $insertar->bindParam(':p_carro', $data['p_carro'], PDO::PARAM_INT);
-        $insertar->bindParam(':p_camioneta', $data['p_camioneta'], PDO::PARAM_INT);
-        $insertar->bindParam(':p_van', $data['p_van'], PDO::PARAM_INT);
-        $insertar->bindParam(':imagen', $data['imagen'], PDO::PARAM_STR);
+        $insertar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
         $insertar->execute();
         $result = $insertar->rowCount();
         return $result;

@@ -151,33 +151,31 @@
     <!-- Seleccionar servicio -->
      <div class="tab">
       Servicio:
-      <div class="container text-center">
-        <div class="row row-cols-3">
-          <?php foreach ($servicios as $servicio): ?>
-            <div class="col">
-              <div class="card">
-                <img src="..." class="card-img-top" alt="<?php echo $servicio['servicio']; ?>">
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo $servicio['servicio']; ?></h5>
-                  <p class="card-text"><?php echo $servicio['descripcion']; ?></p>
-                  <input type="radio" value="<?php echo $servicio['id_servicio']; ?>"
-                    data-id="<?php echo $servicio['id_servicio']; ?>" data-precio="<?php echo $servicio['p_ubertaxi']; ?>"
-                    name="data[id_servicio]">
-                  <input seleccionar-servicio" type="radio" value="<?php echo $servicio['id_servicio']; ?>"
-                    data-id="<?php echo $servicio['id_servicio']; ?>" data-precio="<?php echo $servicio['p_carro']; ?>"
-                    name="data[id_servicio]">
-                  <input seleccionar-servicio" type="radio" value="<?php echo $servicio['id_servicio']; ?>"
-                    data-id="<?php echo $servicio['id_servicio']; ?>"
-                    data-precio="<?php echo $servicio['p_camioneta']; ?>" name="data[id_servicio]">
-                  <input seleccionar-servicio" type="radio" value="<?php echo $servicio['id_servicio']; ?>"
-                    data-id="<?php echo $servicio['id_servicio']; ?>" data-precio="<?php echo $servicio['p_van']; ?>"
-                    name="data[id_servicio]">
-                </div>
-              </div>
-            </div>
+      <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Servicio</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+           <?php foreach ($servicios as $servicio): ?>
+            <tr>
+              <th scope="row"><?php echo $servicio['id_servicio']; ?> </th>
+              <td><?php echo $servicio['servicio']; ?></td>
+              <td><?php echo $servicio['descripcion']; ?></td>
+              <td>$<?php echo $servicio['precio']; ?></td>
+              <td>
+                <input id="id_servicio" type="radio" name="data[id_servicio]" value="<?php echo $servicio['id_servicio']; ?>" <?php if (isset($_POST['data']['id_servicio']) && $_POST['data']['id_servicio'] == $servicio['id_servicio'])
+                     echo 'checked'; ?>><label for="" class="m-auto">Seleccionar</label>
+              </td>
+            </tr>
           <?php endforeach; ?>
-        </div>
-      </div>
+        </tbody>
+      </table>
     </div>   
 
     <!-- Seleccionar empleado -->
@@ -218,7 +216,6 @@
                 ?> " class="card-img-top" alt="<?php echo $producto['imagen']; ?>">
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
-                  <p class="card-text"><?php echo $producto['descripcion']; ?></p>
                   <p class="card-text">$<?php echo $producto['precio']; ?></p>
                 </div>
                 <div class="form-check">
@@ -234,19 +231,8 @@
             </div>
           <?php endforeach; ?>
         </div>
-
       </div>
     </div>
-
-    <!-- Resumen -->
-<div class="tab">
-  <h3>Resumen:</h3>
-  <p>Cliente ID: </p>
-  <p>Vehículo: </p>
-  <p>Servicio: </p>
-  <p>Empleado: </p>
-  <p>Otros Productos: <span id="resumenProductos"></span></p>
-</div>
 
     <!--  -->
     <div style="overflow: auto">

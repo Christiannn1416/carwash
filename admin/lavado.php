@@ -30,13 +30,43 @@ switch ($accion) {
         break;
     case 'resumen':
         $resumen = $app->resumen();
+        $_SESSION['resumen'] = $resumen;
+        $id_lavado = $resumen['id_lavado'];
+        $id_cliente = $resumen['id_cliente'];
+        $cliente = $resumen['cliente'];
+        $marca_vehiculo = $resumen['marca_vehiculo'];
+        $color = $resumen['color'];
+        $placas = $resumen['placas'];
+        $id_servicio = $resumen['id_servicio'];
+        $servicio = $resumen['servicio'];
+        $precio_servicio = $resumen['precio_servicio'];
+        $id_empleado = $resumen['id_empleado'];
+        $empleado = $resumen['empleado'];
+        $prod_select = $resumen['productos'];
+        $correo_usuario = $resumen['correo'];
+        require_once("views/lavado/resumen.php");
         break;
+
     case 'nuevo':
-        $data = $_POST;
+        if (isset($_SESSION['resumen'])) {
+            $data = $_SESSION['resumen'];
+        } else {
+            $data = $_POST;
+        }
+        if (isset($data['correo'])) {
+            // El correo ya está en el array, no es necesario obtenerlo de nuevo
+            $data['correo'] = $data['correo']; // Esto es redundante, ya está en el array
+        } else {
+            // Si por alguna razón no está, puedes asignarle un valor predeterminado
+            $data['correo'] = 'No disponible';
+        }
         $resultado = $app->create($data);
         if ($resultado) {
             $mensaje = "El lavado se ha agregado correctamente";
             $tipo = "success";
+            $app->ticket();
+            $app->mandar_ticket($data['correo'], 'Ticket de servicio', 'Le proporcionamos su ticket.');
+
         } else {
             $mensaje = "Ocurrió un error al agregar";
             $tipo = "danger";
@@ -44,6 +74,7 @@ switch ($accion) {
         $lavados = $app->readAll();
         require_once('views/lavado/index.php');
         break;
+
     case 'actualizar':
         $lavados = $app->readOne($id);
         require_once('views/lavado/crear.php');
@@ -93,10 +124,6 @@ switch ($accion) {
         }
         $lavados = $app->readAll();
         require_once("views/lavado/index.php");
-        break;
-    case 'resumen':
-
-        require_once("views/lavado/resumen.php");
         break;
     default:
         $lavados = $app->readAll();

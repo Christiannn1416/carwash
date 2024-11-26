@@ -69,8 +69,8 @@ $app->checkRol('administrador'); ?>
             <div class="card" style="width: 18rem;">
                 <img src="icons/asignar.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Asignaciones</h5>
-                    <p class="card-text">Asignaciones.</p>
+                    <h5 class="card-title">Sistema de Usuarios</h5>
+                    <p class="card-text">Crea usuarios, asigna roles y permisos.</p>
                     <a href="asignacion.php" class="btn btn-primary">Ir</a>
                 </div>
             </div>
