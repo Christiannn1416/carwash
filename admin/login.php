@@ -12,7 +12,7 @@ switch ($accion) {
         if ($app->login($usuario, $contrasena)) {
             $mensaje = "Bienvenido al Sistema";
             $tipo = "success";
-            $app->checkRol('administrador');
+            $app->checkRol(['Administrador', 'Empleado', 'Encargador de Turno']);
             require_once('administrador.php');
             $app->alert($tipo, $mensaje);
         } else {

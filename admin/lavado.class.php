@@ -161,8 +161,6 @@ class Lavado extends Sistema
             $correo_usuario = 'No disponible';
         }
 
-
-
         $id_empleado = $data['id_empleado'];
         $sql2 = 'select empleado from empleados where id_empleado = :id_empleado;';
         $buscar2 = $this->con->prepare($sql2);
@@ -259,19 +257,6 @@ class Lavado extends Sistema
         $id_lavado = $data['id_lavado'];
         $prod_select = $data['productos'];
 
-
-
-        /* foreach ($producto as $id_producto => $datos) {
-            if (isset($datos['seleccionado']) && !empty($datos['cantidad'])) {
-                $prod_select[] = [
-                    'id_producto' => $id_producto,
-                    'cantidad' => $datos['cantidad'],
-                    'producto' => $datos['producto'],
-                    'precio' => $datos['precio'],
-                ];
-            }
-        } */
-
         try {
             /* include('../lib/phpqrcode/qrlib.php');
             $id_ticket = $id_lavado;
@@ -339,7 +324,7 @@ class Lavado extends Sistema
         }
     }
 
-    function mandar_ticket($destinatario, $asunto, $mensaje)
+    function mandar_ticket($destinatario, $asunto, $mensaje, $pdfPath)
     {
         require '../vendor/autoload.php';
         $mail = new PHPMailer();
@@ -356,7 +341,7 @@ class Lavado extends Sistema
         $mail->Subject = $asunto;
         $mail->msgHTML($mensaje);
 
-        /* $mail->addAttachment($pdfPath); */
+        $mail->addAttachment($pdfPath);
         if (!$mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
         } else {

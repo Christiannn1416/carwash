@@ -1,7 +1,7 @@
 <?php
 require_once('rol.class.php');
 $app = new Rol();
-$app->checkRol('administrador');
+$app->checkRol('Administrador');
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
 

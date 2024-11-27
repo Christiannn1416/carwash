@@ -94,11 +94,11 @@ class Sistema
         require_once('views/footer.php');
     }
 
-    function checkRol($rol)
+    function checkRol($rolesPermitidos)
     {
         if (isset($_SESSION['roles'])) {
             $roles = $_SESSION['roles'];
-            if (!in_array($rol, $roles)) {
+            if (!array_intersect((array) $rolesPermitidos, $roles)) {
                 $mensaje = "ERROR: usted no tiene el rol adecuado";
                 $tipo = "danger";
                 require_once('views/header.php');
@@ -106,13 +106,14 @@ class Sistema
                 die();
             }
         } else {
-            $mensaje = "Requiere iniciar sesión <a href='login.php'>[Presione aquí para iniciar sesión]<a/>";
+            $mensaje = "Requiere iniciar sesión <a href='login.php'>[Presione aquí para iniciar sesión]</a>";
             $tipo = "danger";
             require_once('views/header.php');
             $this->alert($tipo, $mensaje);
             die();
         }
     }
+
     function sendMail($destinatario, $asunto, $mensaje)
     {
         require 'vendor/autoload.php';

@@ -1,7 +1,7 @@
 <?php
 require_once('permiso.class.php');
 $app = new Permiso();
-$app->checkRol('administrador');
+$app->checkRol('Administrador');
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
 switch ($accion) {

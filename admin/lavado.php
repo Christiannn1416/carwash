@@ -54,10 +54,10 @@ switch ($accion) {
             $data = $_POST;
         }
         if (isset($data['correo'])) {
-            // El correo ya está en el array, no es necesario obtenerlo de nuevo
-            $data['correo'] = $data['correo']; // Esto es redundante, ya está en el array
+
+            $data['correo'] = $data['correo'];
         } else {
-            // Si por alguna razón no está, puedes asignarle un valor predeterminado
+
             $data['correo'] = 'No disponible';
         }
         $resultado = $app->create($data);
@@ -65,7 +65,7 @@ switch ($accion) {
             $mensaje = "El lavado se ha agregado correctamente";
             $tipo = "success";
             $app->ticket();
-            $app->mandar_ticket($data['correo'], 'Ticket de servicio', 'Le proporcionamos su ticket.');
+            $app->mandar_ticket($data['correo'], 'Ticket de servicio', 'Le proporcionamos su ticket.', '../tickets/reporte_lavado' . $data['id_lavado'] . '.pdf');
 
         } else {
             $mensaje = "Ocurrió un error al agregar";
@@ -124,6 +124,26 @@ switch ($accion) {
         }
         $lavados = $app->readAll();
         require_once("views/lavado/index.php");
+        break;
+
+    case 'verticket':
+        if (!is_numeric($id)) {
+            echo "ID de ticket inválido.";
+            return;
+        }
+
+        $archivo = '../tickets/reporte_lavado' . $id . '.pdf';
+
+        if (file_exists($archivo)) {
+            // Enviar encabezados para abrir el PDF en el navegador
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: inline; filename="' . basename($archivo) . '"');
+            header('Content-Length: ' . filesize($archivo));
+            readfile($archivo);
+            exit;
+        } else {
+            echo "El ticket no existe o no se encuentra disponible.";
+        }
         break;
     default:
         $lavados = $app->readAll();

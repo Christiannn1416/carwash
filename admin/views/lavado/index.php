@@ -41,6 +41,8 @@ endif; ?>
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                                 <a href="lavado.php?accion=cambiarestado&id=<?php echo $lavado['id_lavado']; ?>"
                                     class="btn btn-success" style="margin-right:1rem;">Terminar</a>
+                                <a href="lavado.php?accion=verticket&id=<?php echo $lavado['id_lavado']; ?>"
+                                    class="btn btn-success" style="margin-right:1rem;">Ticket</a>
                                 <a href="lavado.php?accion=actualizar&id=<?php echo $lavado['id_lavado']; ?>"
                                     class="btn btn-primary" style="margin-right:1rem;">Actualizar</a>
                                 <a href="lavado.php?accion=eliminar&id=<?php echo $lavado['id_lavado']; ?>"
