@@ -90,7 +90,9 @@
 <body>
   <form id="regForm" action="lavado.php?accion=<?php if ($accion == "crear"):
     echo ('resumen');
+  else: echo('modificar&id='.$id);
   endif; ?>" method="post">
+  
     <h1>Nuevo Lavado:</h1>
     <!-- Seleccionar cliente -->
      <div class="tab">
@@ -122,8 +124,11 @@
                   <td><?php echo $cliente['correo']; ?></td>
                   <td>
                     <!-- Botón para seleccionar cliente -->
-      <input id="id_cliente" type="radio" name="data[id_cliente]" value="<?php echo $cliente['id_cliente']; ?>" <?php if (isset($_POST['data']['id_cliente']) && $_POST['data']['id_cliente'] == $cliente['id_cliente'])
-           echo 'checked'; ?>><label for="" class="m-auto">Seleccionar</label>
+      <input id="id_cliente" type="radio" name="data[id_cliente]" value="<?php echo $cliente['id_cliente']; ?>" 
+          <?php if (isset($lavados['id_cliente']) && $lavados['id_cliente'] == $cliente['id_cliente']): ?>
+            checked
+          <?php endif; ?>>
+           <label for="" class="m-auto">Seleccionar</label>
       </td>
       </td>
       </tr>
@@ -136,15 +141,27 @@
     <div class="tab">
       <p>
         <label for="Carro" class="col-sm-2 col-form-label">Carro</label>
-        <input placeholder="Carro" name="data[marca_vehiculo]" id="marca_vehiculo" require>
+        <input placeholder="Carro" name="data[marca_vehiculo]" id="marca_vehiculo" require 
+        value="<?php if (isset($lavados['marca_vehiculo'])):
+          echo ($lavados['marca_vehiculo']);
+        endif; ?>"
+        >
       </p>
       <p>
         <label for="id_cliente" class="col-sm-2 col-form-label">Color</label>
-        <input placeholder="Color" name="data[color]" id="color" require>
+        <input placeholder="Color" name="data[color]" id="color" require
+        value="<?php if (isset($lavados['color'])):
+          echo ($lavados['color']);
+        endif; ?>"
+        >
       </p>
       <p>
         <label for="placas" class="col-sm-2 col-form-label">Placas</label>
-        <input placeholder="Placas" name="data[placas]" id="placas" require>
+        <input placeholder="Placas" name="data[placas]" id="placas" require
+        value="<?php if (isset($lavados['placas'])):
+          echo ($lavados['placas']);
+        endif; ?>"
+        >
       </p>
     </div> 
 
@@ -169,8 +186,13 @@
               <td><?php echo $servicio['descripcion']; ?></td>
               <td>$<?php echo $servicio['precio']; ?></td>
               <td>
-                <input id="id_servicio" type="radio" name="data[id_servicio]" value="<?php echo $servicio['id_servicio']; ?>" <?php if (isset($_POST['data']['id_servicio']) && $_POST['data']['id_servicio'] == $servicio['id_servicio'])
-                     echo 'checked'; ?>><label for="" class="m-auto">Seleccionar</label>
+                <input id="id_servicio_<?php echo $servicio['id_servicio']; ?>"
+                 type="radio" name="data[id_servicio]"
+                  value="<?php echo $servicio['id_servicio']; ?>" 
+                  <?php if (isset($lavados['id_servicio']) && $lavados['id_servicio'] == $servicio['id_servicio']): ?> 
+                    checked
+                     <?php endif; ?>>
+                     <label for="" class="m-auto">Seleccionar</label>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -186,10 +208,12 @@
           <?php foreach ($empleados as $empleado): ?>
             <div class="col">
               <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="<?php echo $empleado['empleado']; ?>">
                 <div class="card-body">
                   <h5 class="card-title"><?php echo $empleado['empleado']; ?></h5>
                   <input type="radio" value="<?php echo $empleado['id_empleado']; ?>"
+                  <?php if (isset($lavados['id_empleado']) && $lavados['id_empleado'] == $empleado['id_empleado']): ?> 
+                      checked
+                     <?php endif; ?>
                     data-empleado="<?php echo $empleado['id_empleado']; ?>" name="data[id_empleado]">
                 </div>
               </div>
@@ -200,39 +224,44 @@
     </div>  
 
     <!-- Producto extra -->
-    <div class="tab">
-      <h3>Producto extra:</h3>
-      <div class="container text-center">
-        <div class="row row-cols-5">
-          <?php foreach ($productos as $producto): ?>
-            <div class="col">
-              <div class="card">
-                <img src="<?php
-                if (file_exists("../uploads/" . $producto['imagen'])) {
-                  echo ("../uploads/" . $producto['imagen']);
-                } else {
-                  echo ("../uploads/default.png");
-                }
-                ?> " class="card-img-top" alt="<?php echo $producto['imagen']; ?>">
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
-                  <p class="card-text">$<?php echo $producto['precio']; ?></p>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="<?php echo $producto['id_producto']; ?>"
-                    id="flexCheckDefault_<?php echo $producto['id_producto']; ?>" name="producto[<?php echo $producto['id_producto']; ?>][seleccionado]" 
-                    <?php echo (in_array($producto['id_producto'], $misproductos) ? 'checked' : ''); ?>>
-                  <label class="form-check-label" for="flexCheckDefault_<?php echo $producto['id_producto']; ?>">
-                    Seleccionar
-                  </label>
-                  <input type="number" name="producto[<?php echo $producto['id_producto']; ?>][cantidad]">
-                </div>
-              </div>
+     <div class="tab">
+  <h3>Producto extra:</h3>
+  <div class="container text-center">
+    <div class="row row-cols-5">
+      <?php foreach ($productos as $producto): ?>
+        <div class="col">
+          <div class="card">
+            <img src="<?php
+            if (file_exists("../uploads/" . $producto['imagen'])) {
+              echo ("../uploads/" . $producto['imagen']);
+            } else {
+              echo ("../uploads/default.png");
+            }
+            ?> " class="card-img-top" alt="<?php echo $producto['imagen']; ?>">
+            <div class="card-body">
+              <h5 class="card-title"><?php echo $producto['producto']; ?></h5>
+              <p class="card-text">$<?php echo $producto['precio']; ?></p>
             </div>
-          <?php endforeach; ?>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="<?php echo $producto['id_producto']; ?>"
+                id="flexCheckDefault_<?php echo $producto['id_producto']; ?>" name="producto[<?php echo $producto['id_producto']; ?>][seleccionado]" 
+                <?php echo (isset($misproductos[$producto['id_producto']]) ? 'checked' : ''); ?>
+                >
+              <label class="form-check-label" for="flexCheckDefault_<?php echo $producto['id_producto']; ?>">
+                Seleccionar
+              </label>
+              <input type="number" 
+                name="producto[<?php echo $producto['id_producto']; ?>][cantidad]"
+                value="<?php echo isset($misproductos[$producto['id_producto']]['cantidad']) ? ($misproductos[$producto['id_producto']]['cantidad']) : ''; ?>"
+                >
+            </div>
+          </div>
         </div>
-      </div>
+      <?php endforeach; ?>
     </div>
+  </div>
+</div>
+
 
     <!--  -->
     <div style="overflow: auto">

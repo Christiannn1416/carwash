@@ -50,6 +50,7 @@ switch ($accion) {
     case 'nuevo':
         if (isset($_SESSION['resumen'])) {
             $data = $_SESSION['resumen'];
+
         } else {
             $data = $_POST;
         }
@@ -77,11 +78,16 @@ switch ($accion) {
 
     case 'actualizar':
         $lavados = $app->readOne($id);
+        $clientes = $appcliente->readAll();
+        $servicios = $appservicio->readAll();
+        $empleados = $appempleado->readAll();
+        $productos = $appproducto->readAll();
+        $misproductos = $app->readAllProductos($id);
         require_once('views/lavado/crear.php');
         break;
 
     case 'modificar':
-        $data = $_POST['data'];
+        $resumen = $app->resumen();
         $resultado = $app->update($id, $data);
         if ($resultado) {
             $mensaje = "El lavado se ha actualizado correctamente";

@@ -40,7 +40,7 @@ class Lavado extends Sistema
         $buscar_correo->execute();
         $correo_usuario = $buscar_correo->fetch(PDO::FETCH_ASSOC);
 
-        $id_lavado = $this->con->lastInsertId();
+        $id_lavado = $data['id_lavado'];
         if (!empty($id_lavado)) {
             // Inserción en la tabla `lavadoproductos`
             $sql_product = "INSERT INTO lavadoproductos (id_lavado, id_producto, cantidad)
@@ -59,11 +59,59 @@ class Lavado extends Sistema
         return $insertar->rowCount();
     }
 
-    function update($id, $data)
+    function update($id, $data): int
     {
-        $result = [];
         $this->conexion();
+
+        // Actualizar la tabla 'lavados'
+        $sql = "UPDATE lavados SET id_cliente = :id_cliente,
+                                id_servicio = :id_servicio,
+                                id_empleado = :id_empleado,
+                                marca_vehiculo = :marca_vehiculo,
+                                color = :color,
+                                placas = :placas
+                                WHERE id_lavado = :id_lavado";
+        $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':id_cliente', $data['data']['id_cliente'], PDO::PARAM_INT);
+        $modificar->bindParam(':id_servicio', $data['data']['id_servicio'], PDO::PARAM_INT);
+        $modificar->bindParam(':id_empleado', $data['data']['id_empleado'], PDO::PARAM_INT);
+        $modificar->bindParam(':marca_vehiculo', $data['data']['marca_vehiculo'], PDO::PARAM_STR);
+        $modificar->bindParam(':color', $data['data']['color'], PDO::PARAM_STR);
+        $modificar->bindParam(':placas', $data['data']['placas'], PDO::PARAM_STR);
+        $modificar->bindParam(':id_lavado', $id, PDO::PARAM_INT);
+        $modificar->execute();
+
+        // Contar las filas afectadas por el UPDATE
+        $filas_afectadas = $modificar->rowCount();
+
+        // Eliminar productos relacionados
+        $sql2 = "DELETE FROM lavadoproductos WHERE id_lavado = :id_lavado";
+        $borrar_p = $this->con->prepare($sql2);
+        $borrar_p->bindParam(':id_lavado', $id, PDO::PARAM_INT);
+        $borrar_p->execute();
+
+        // Insertar productos actualizados
+        $productos = $data['producto'] ?? [];
+        if (!empty($productos)) {
+            $sql_product = "INSERT INTO lavadoproductos (id_lavado, id_producto, cantidad)
+                        VALUES (:id_lavado, :id_producto, :cantidad)";
+            $insertar_product = $this->con->prepare($sql_product);
+
+            foreach ($productos as $id_producto => $prod) {
+                // Verificar que la cantidad esté definida y no vacía
+                if (!empty($prod['cantidad'])) {
+                    $insertar_product->bindParam(':id_lavado', $id, PDO::PARAM_INT);
+                    $insertar_product->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
+                    $insertar_product->bindParam(':cantidad', $prod['cantidad'], PDO::PARAM_INT);
+                    $insertar_product->execute();
+                    $filas_afectadas += $insertar_product->rowCount();
+                }
+            }
+        }
+
+        return $filas_afectadas;
     }
+
 
     function delete($id)
     {
@@ -104,15 +152,19 @@ class Lavado extends Sistema
     function readAllProductos($id)
     {
         $this->conexion();
-        $sql = "select distinct p.id_producto from productos p join lavadoproductos lp on p.id_producto = lp.id_producto 
-                join lavados l on lp.id_lavado = l.id_lavado where l.id_lavado=:id_lavado;";
+        $sql = "SELECT DISTINCT p.id_producto, lp.cantidad 
+            FROM productos p 
+            JOIN lavadoproductos lp ON p.id_producto = lp.id_producto 
+            JOIN lavados l ON lp.id_lavado = l.id_lavado 
+            WHERE l.id_lavado = :id_lavado;";
         $consulta = $this->con->prepare($sql);
         $consulta->bindParam(':id_lavado', $id, PDO::PARAM_INT);
         $consulta->execute();
         $productos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
         $data = [];
         foreach ($productos as $producto) {
-            array_push($data, $producto['id_producto']);
+            $data[$producto['id_producto']] = ['cantidad' => $producto['cantidad']];
         }
         return $data;
     }
