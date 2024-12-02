@@ -90,7 +90,7 @@
 <body>
   <form id="regForm" action="lavado.php?accion=<?php if ($accion == "crear"):
     echo ('resumen');
-  else: echo('modificar&id='.$id);
+  else: echo('resumen_editar&id='.$id);
   endif; ?>" method="post">
   
     <h1>Nuevo Lavado:</h1>

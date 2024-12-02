@@ -72,12 +72,12 @@ class Lavado extends Sistema
                                 placas = :placas
                                 WHERE id_lavado = :id_lavado";
         $modificar = $this->con->prepare($sql);
-        $modificar->bindParam(':id_cliente', $data['data']['id_cliente'], PDO::PARAM_INT);
-        $modificar->bindParam(':id_servicio', $data['data']['id_servicio'], PDO::PARAM_INT);
-        $modificar->bindParam(':id_empleado', $data['data']['id_empleado'], PDO::PARAM_INT);
-        $modificar->bindParam(':marca_vehiculo', $data['data']['marca_vehiculo'], PDO::PARAM_STR);
-        $modificar->bindParam(':color', $data['data']['color'], PDO::PARAM_STR);
-        $modificar->bindParam(':placas', $data['data']['placas'], PDO::PARAM_STR);
+        $modificar->bindParam(':id_cliente', $data['id_cliente'], PDO::PARAM_INT);
+        $modificar->bindParam(':id_servicio', $data['id_servicio'], PDO::PARAM_INT);
+        $modificar->bindParam(':id_empleado', $data['id_empleado'], PDO::PARAM_INT);
+        $modificar->bindParam(':marca_vehiculo', $data['marca_vehiculo'], PDO::PARAM_STR);
+        $modificar->bindParam(':color', $data['color'], PDO::PARAM_STR);
+        $modificar->bindParam(':placas', $data['placas'], PDO::PARAM_STR);
         $modificar->bindParam(':id_lavado', $id, PDO::PARAM_INT);
         $modificar->execute();
 
@@ -91,7 +91,7 @@ class Lavado extends Sistema
         $borrar_p->execute();
 
         // Insertar productos actualizados
-        $productos = $data['producto'] ?? [];
+        $productos = $data['productos'] ?? [];
         if (!empty($productos)) {
             $sql_product = "INSERT INTO lavadoproductos (id_lavado, id_producto, cantidad)
                         VALUES (:id_lavado, :id_producto, :cantidad)";
@@ -101,7 +101,7 @@ class Lavado extends Sistema
                 // Verificar que la cantidad esté definida y no vacía
                 if (!empty($prod['cantidad'])) {
                     $insertar_product->bindParam(':id_lavado', $id, PDO::PARAM_INT);
-                    $insertar_product->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
+                    $insertar_product->bindParam(':id_producto', $prod['id_producto'], PDO::PARAM_INT);
                     $insertar_product->bindParam(':cantidad', $prod['cantidad'], PDO::PARAM_INT);
                     $insertar_product->execute();
                     $filas_afectadas += $insertar_product->rowCount();
@@ -247,12 +247,16 @@ class Lavado extends Sistema
             $servicio = $servicio['servicio'];
         }
 
-        // Obtener el siguiente id_lavado disponible
-        $sql = 'SHOW TABLE STATUS LIKE "lavados";';
-        $consulta = $this->con->prepare($sql);
-        $consulta->execute();
-        $tabla_info = $consulta->fetch(PDO::FETCH_ASSOC);
-        $id_lavado = $tabla_info['Auto_increment']; // Siguiente valor auto_increment
+        $id_lavado = isset($_GET['id']) ? $_GET['id'] : null;
+        if ($id_lavado) {
+        } else {
+            $sql = 'SHOW TABLE STATUS LIKE "lavados";';
+            $consulta = $this->con->prepare($sql);
+            $consulta->execute();
+            $tabla_info = $consulta->fetch(PDO::FETCH_ASSOC);
+            $id_lavado = $tabla_info['Auto_increment']; // Siguiente valor auto_increment
+        }
+
 
         $prod_select = [];
         foreach ($producto as $id_producto => $datos) {

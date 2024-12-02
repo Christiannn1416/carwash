@@ -1,5 +1,10 @@
 <?php require('views/header_admin.php') ?>
-<form action="lavado.php?accion=nuevo" method="post">
+
+<form action="lavado.php?accion=<?php if ($accion == "resumen"):
+    echo ('nuevo');
+else:
+    echo ('modificar&id=' . $id);
+endif; ?>" method="post">
     <div class="container mt-4">
         <div class="row mb-4">
             <div class="col-12">

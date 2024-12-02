@@ -47,6 +47,25 @@ switch ($accion) {
         require_once("views/lavado/resumen.php");
         break;
 
+    case 'resumen_editar':
+        $resumen = $app->resumen();
+        $_SESSION['resumen'] = $resumen;
+        $id_lavado = $resumen['id_lavado'];
+        $id_cliente = $resumen['id_cliente'];
+        $cliente = $resumen['cliente'];
+        $marca_vehiculo = $resumen['marca_vehiculo'];
+        $color = $resumen['color'];
+        $placas = $resumen['placas'];
+        $id_servicio = $resumen['id_servicio'];
+        $servicio = $resumen['servicio'];
+        $precio_servicio = $resumen['precio_servicio'];
+        $id_empleado = $resumen['id_empleado'];
+        $empleado = $resumen['empleado'];
+        $prod_select = $resumen['productos'];
+        $correo_usuario = $resumen['correo'];
+        require_once("views/lavado/resumen.php");
+        break;
+
     case 'nuevo':
         if (isset($_SESSION['resumen'])) {
             $data = $_SESSION['resumen'];
@@ -87,11 +106,31 @@ switch ($accion) {
         break;
 
     case 'modificar':
-        $resumen = $app->resumen();
+        if (isset($_SESSION['resumen'])) {
+            $data = $_SESSION['resumen'];
+        } else {
+            $data = $_POST;
+        }
+
+        if (isset($data['correo'])) {
+            $data['correo'] = $data['correo'];
+        } else {
+
+            $data['correo'] = 'No disponible';
+        }
+        if (isset($data['correo'])) {
+
+            $data['correo'] = $data['correo'];
+        } else {
+
+            $data['correo'] = 'No disponible';
+        }
         $resultado = $app->update($id, $data);
         if ($resultado) {
             $mensaje = "El lavado se ha actualizado correctamente";
             $tipo = "success";
+            $app->ticket();
+            $app->mandar_ticket($data['correo'], 'Ticket de servicio', 'Le proporcionamos su ticket Corregido.', '../tickets/reporte_lavado' . $data['id_lavado'] . '.pdf');
         } else {
             $mensaje = "Ocurrió un error al actualizar";
             $tipo = "danger";
