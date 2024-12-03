@@ -30,23 +30,24 @@ class Recompensa extends Sistema
         if ($_FILES['imagen']['error'] != 4) {
             $fotografia = $this->uploadFoto();
             $tmp = "imagen=:imagen,";
-            $sql = 'update recompensa set 
+        }
+        $sql = 'update recompensa set 
                                     recompensa=:recompensa,
                                     ' . $tmp . '
                                     acumulado=:acumulado
                                     where id_recompensa=:id_recompensa;
                                      ';
-            $modificar = $this->con->prepare($sql);
-            $modificar->bindParam(':id_recompensa', $id, PDO::PARAM_INT);
-            $modificar->bindParam(':recompensa', $data['recompensa'], PDO::PARAM_STR);
-            if ($_FILES['imagen']['error'] != 4) {
-                $modificar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
-            }
-            $modificar->bindParam(':acumulado', $data['acumulado'], PDO::PARAM_INT);
-            $modificar->execute();
-            $result = $modificar->rowCount();
-            return $result;
+        $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':id_recompensa', $id, PDO::PARAM_INT);
+        $modificar->bindParam(':recompensa', $data['recompensa'], PDO::PARAM_STR);
+        if ($_FILES['imagen']['error'] != 4) {
+            $modificar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
         }
+        $modificar->bindParam(':acumulado', $data['acumulado'], PDO::PARAM_INT);
+        $modificar->execute();
+        $result = $modificar->rowCount();
+        return $result;
+
     }
 
     function delete($id)

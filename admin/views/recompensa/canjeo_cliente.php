@@ -27,7 +27,19 @@ echo $cliente['cliente']; ?></h1>
                             <input type="hidden" name="data[id_cliente]" value="<?php echo $cliente_c; ?>">
                             <input type="hidden" name="data[id_recompensa]"
                                 value="<?php echo $recompensa['id_recompensa']; ?>">
-                            <button type="submit" class="btn btn-primary">Canjear</button>
+                            <button type="submit" class="btn btn-primary" <?php if ($acumulado == $recompensa['acumulado']) {
+                                $mensaje = "Canjear";
+                            } else {
+                                $mensaje = "Bloqueado";
+                                echo 'disabled';
+                            }
+                            if (in_array($recompensa['id_recompensa'], $canjeadas)) {
+                                echo 'disabled';
+                                $mensaje = "Canjeado";
+                            }
+                            ?>>
+                                <?php echo $mensaje; ?>
+                            </button>
                         </form>
                     </div>
                 </div>

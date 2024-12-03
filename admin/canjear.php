@@ -14,13 +14,22 @@ switch ($accion) {
     case 'canjear':
         $acumulado = $applavado->readAcumulado($id);
         $cliente = $appcliente->readOne($id);
+        $canjeadas = $app->check_canjeo($id);
         $recompensas = $apprecompensa->readAll();
         require_once("views/recompensa/canjeo_cliente.php");
         break;
     case 'guardar_canjeo':
-        $data = $_POST;
-        print_r($data);
-        die();
+        $data = $_POST['data'];
+        $resultado = $app->canjear($data);
+        if ($resultado) {
+            $mensaje = "Se ha canjeado con éxito";
+            $tipo = "success";
+        } else {
+            $mensaje = "Ha ocurrido un error";
+            $tipo = "danger";
+        }
+        $clientes = $appcliente->readAll();
+        require_once("views/recompensa/canjeo.php");
         break;
     default:
         $clientes = $appcliente->readAll();
