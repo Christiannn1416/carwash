@@ -4,11 +4,13 @@ require_once('cliente.class.php');
 require_once('servicio.class.php');
 require_once('empleado.class.php');
 require_once('producto.class.php');
+require_once('recompensa.class.php');
 $app = new Lavado();
 $appcliente = new Cliente();
 $appservicio = new Servicio();
 $appempleado = new Empleado();
 $appproducto = new Producto();
+$apprecompensa = new Recompensa();
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
@@ -19,6 +21,7 @@ switch ($accion) {
         $empleados = $appempleado->readAll();
         $productos = $appproducto->readAll();
         $misproductos = $app->readAllProductos($id);
+        $acumulado = $app->readAcumulado($id);
         require_once("views/lavado/crear.php");
         break;
     case 'crear_cliente_lavado':

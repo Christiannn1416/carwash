@@ -37,8 +37,6 @@ class Cliente extends Sistema
             return $msj;
         }
     }
-
-
     function update($id, $data)
     {
         $result = [];

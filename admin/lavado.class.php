@@ -405,5 +405,18 @@ class Lavado extends Sistema
         }
     }
 
+    function readAcumulado($id)
+    {
+        $this->conexion();
+        $sql = "SELECT COUNT(id_cliente) AS acumulado
+            FROM lavados
+            WHERE id_cliente = :id_cliente;";
+        $read = $this->con->prepare($sql);
+        $read->bindParam(':id_cliente', $id, PDO::PARAM_INT);
+        $read->execute();
+        $result = $read->fetch(PDO::FETCH_ASSOC);
+        return (int) $result['acumulado']; // Aseguramos que se devuelve un entero
+    }
+
 }
 ?>
