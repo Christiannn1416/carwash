@@ -28,7 +28,7 @@ switch ($accion) {
     default:
         $servicios = $appservicio->readAll();
         $productos = $appproducto->readAll();
-        require_once("views/visitor/index.php");
+        require_once("views/visitante/index.php");
 
 }
 ?>

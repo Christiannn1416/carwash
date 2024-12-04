@@ -16,9 +16,9 @@ switch ($accion) {
             $resultado = $app->create($datos);
         }
         if ($resultado == 1) {
-            $data['mensaje'] = "El servicio se ha agregado correctamente";
+            $data['mensaje'] = "El servicio se ha guardaro correctamente";
         } else {
-            $data['mensaje'] = "Ocurrió un error al agregar";
+            $data['mensaje'] = "Ocurrió un error al guardar";
         }
         break;
     case 'DELETE':
