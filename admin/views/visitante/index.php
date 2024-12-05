@@ -1,3 +1,4 @@
+<?php require('views/alert_cliente.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,12 +19,12 @@
     <!-- CSS Libraries -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="views/visitante/lib/flaticon/font/flaticon.css" rel="stylesheet">
+    <link href="views/visitante/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="views/visitante/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="views/visitante/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -34,8 +35,8 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="logo">
                         <a href="index.html">
-                            <h1>Auto<span>Wash</span></h1>
-                            <!-- <img src="img/logo.jpg" alt="Logo"> -->
+                            <h1>Car<span>Wash</span></h1>
+                            <!-- <img src="views/visitante/img/logo.jpg" alt="Logo"> -->
                         </a>
                     </div>
                 </div>
@@ -93,11 +94,11 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto">
                         <a href="index.php" class="nav-item nav-link active">Home</a>
-                        <a href="about.html" class="nav-item nav-link">Sobre Nosotros</a>
-                        <a href="service.html" class="nav-item nav-link">Servicios</a>
-                        <a href="price.html" class="nav-item nav-link">Price</a>
-                        <a href="location.html" class="nav-item nav-link">Washing Points</a>
-                        <a href="contact.html" class="nav-item nav-link">Contacto</a>
+                        <a href="#" class="nav-item nav-link">Sobre Nosotros</a>
+                        <a href="#" class="nav-item nav-link">Servicios</a>
+                        <a href="#" class="nav-item nav-link">Price</a>
+                        <a href="#" class="nav-item nav-link">Washing Points</a>
+                        <a href="#" class="nav-item nav-link">Contacto</a>
                     </div>
                 </div>
             </nav>
@@ -111,42 +112,31 @@
             <div class="owl-carousel">
                 <div class="carousel-item">
                     <div class="carousel-img">
-                        <img src="img/carousel-1.jpg" alt="Image">
+                        <img src="views/visitante/img/carousel-1.jpg" alt="Image">
                     </div>
                     <div class="carousel-text">
                         <h3>Lavado & Detalle</h3>
                         <h1>Mantén tu carro nuevo</h1>
-                        <p>
-                            Deja en nuestras manos tu auto, somos los mejores para brindarte el mejor servicio
-                        </p>
                         <a class="btn btn-custom" href="">Explorar Más</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="carousel-img">
-                        <img src="img/carousel-2.jpg" alt="Image">
+                        <img src="views/visitante/img/carousel-2.jpg" alt="Image">
                     </div>
                     <div class="carousel-text">
                         <h3>Lavado & Detalle</h3>
                         <h1>Calidad de Servicio</h1>
-                        <p>
-                            Morbi sagittis turpis id suscipit feugiat. Suspendisse eu augue urna. Morbi sagittis orci
-                            sodales
-                        </p>
                         <a class="btn btn-custom" href="">Explorar Más</a>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="carousel-img">
-                        <img src="img/carousel-3.jpg" alt="Image">
+                        <img src="views/visitante/img/carousel-3.jpg" alt="Image">
                     </div>
                     <div class="carousel-text">
                         <h3>Lavado & Detalle</h3>
                         <h1>Lavado Exterior & Interior</h1>
-                        <p>
-                            Sed ultrices, est eget feugiat accumsan, dui nibh egestas tortor, ut rhoncus nibh ligula
-                            euismod quam
-                        </p>
                         <a class="btn btn-custom" href="">Explorar Más</a>
                     </div>
                 </div>
@@ -155,14 +145,13 @@
     </div>
     <!-- Carousel End -->
 
-
     <!-- About Start -->
     <div class="about">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-img">
-                        <img src="img/about.jpg" alt="Image">
+                        <img src="views/visitante/img/about.jpg" alt="Image">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -172,15 +161,15 @@
                     </div>
                     <div class="about-content">
                         <p>
-                            Lorem ipsum dolor sit amet elit. In vitae turpis. Donec in hendre dui, vel blandit massa. Ut
-                            vestibu suscipi cursus. Cras quis porta nulla, ut placerat risus. Aliquam nec magna eget
-                            velit luctus dictum
+                            En Car Wash, no solo lavamos autos, ¡los transformamos! Sabemos que tu vehículo
+                            es más que un medio de transporte; es una parte importante de tu vida. Por eso, nos
+                            dedicamos a ofrecerte un servicio de calidad superior con rapidez y atención personalizada.
                         </p>
                         <ul>
-                            <li><i class="far fa-check-circle"></i>Seats washing</li>
-                            <li><i class="far fa-check-circle"></i>Vacuum cleaning</li>
-                            <li><i class="far fa-check-circle"></i>Interior wet cleaning</li>
-                            <li><i class="far fa-check-circle"></i>Window wiping</li>
+                            <li><i class="far fa-check-circle"></i>Lavado Exterior</li>
+                            <li><i class="far fa-check-circle"></i>Lavado Interior</li>
+                            <li><i class="far fa-check-circle"></i>Pulido Y Encerado</li>
+                            <li><i class="far fa-check-circle"></i>Limpieza de Motor</li>
                         </ul>
                     </div>
                 </div>
@@ -188,77 +177,6 @@
         </div>
     </div>
     <!-- About End -->
-
-
-    <!-- Service Start -->
-    <div class="service">
-        <div class="container">
-            <div class="section-header text-center">
-                <p>Qué ofrecemos?</p>
-                <h2>Servicios</h2>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-car-wash-1"></i>
-                        <h3>Exterior Washing</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-car-wash"></i>
-                        <h3>Interior Washing</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-vacuum-cleaner"></i>
-                        <h3>Vacuum Cleaning</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-seat"></i>
-                        <h3>Seats Washing</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-car-service"></i>
-                        <h3>Window Wiping</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-car-service-2"></i>
-                        <h3>Wet Cleaning</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-car-wash"></i>
-                        <h3>Oil Changing</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="service-item">
-                        <i class="flaticon-brush-1"></i>
-                        <h3>Brake Reparing</h3>
-                        <p>Lorem ipsum dolor sit amet elit. Phase nec preti facils ornare velit non metus tortor</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
 
     <!-- Price Start -->
     <div class="price">
@@ -268,23 +186,20 @@
                 <h2>Escoge el mejor para tu auto</h2>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="price-item">
-                        <div class="price-header">
-                            <h3>Basic Cleaning</h3>
-                            <h2><span>$</span><strong>25</strong><span>.99</span></h2>
-                        </div>
-                        <div class="price-body">
-                            <ul>
-                                <li><i class="far fa-check-circle"></i>Seats Washing</li>
-                                <li><i class="far fa-check-circle"></i>Vacuum Cleaning</li>
-                                <li><i class="far fa-check-circle"></i>Exterior Cleaning</li>
-                                <li><i class="far fa-times-circle"></i>Interior Wet Cleaning</li>
-                                <li><i class="far fa-times-circle"></i>Window Wiping</li>
-                            </ul>
+                <?php foreach ($servicios as $servicio): ?>
+                    <div class="col-md-4 p-3">
+                        <div class="price-item">
+                            <div class="price-header">
+                                <h3><?php echo $servicio['servicio'] ?></h3>
+                                <h2>$<?php echo $servicio['precio'] ?></h2>
+                            </div>
+                            <div class="price-body">
+                                <p><?php echo $servicio['descripcion'] ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endforeach; ?>
+
             </div>
         </div>
     </div>
@@ -301,30 +216,37 @@
                         <h2>Gana lavados y productos gratis por tu lealtad</h2>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="location-item">
-                                <i class="fa fa-map-marker-alt"></i>
-                                <div class="location-text">
-                                    <h3>Car Washing Point</h3>
-                                    <p>123 Street, New York, USA</p>
-                                    <p><strong>Call:</strong>+012 345 6789</p>
+                        <?php foreach ($recompensas as $recompensa): ?>
+                            <div class="col-md-6">
+                                <div class="location-item">
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <div class="location-text">
+                                        <h3><?php echo $recompensa['recompensa']; ?></h3>
+                                        <p>Acumulando <?php echo $recompensa['acumulado']; ?> Lavados</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="location-form">
                         <h3>Registrate y empieza a ganar</h3>
-                        <form>
+                        <form action="visitor.php?accion=nuevo_registro" method="post">
                             <div class="control-group">
-                                <input type="text" class="form-control" placeholder="Name" required="required" />
+                                <input type="text" class="form-control" placeholder="Nombre" required="required"
+                                    name="data[cliente]" />
                             </div>
                             <div class="control-group">
-                                <input type="email" class="form-control" placeholder="Email" required="required" />
+                                <input type="email" class="form-control" placeholder="Email" required="required"
+                                    name="data[correo]" />
+                            </div>
+                            <div class=" control-group">
+                                <input type="numbre" class="form-control" placeholder="Teléfono" required="required"
+                                    name="data[telefono]" />
                             </div>
                             <div>
-                                <button class="btn btn-custom" type="submit">Registrar</button>
+                                <input type="submit" name="data[enviar]" value="Guardar" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -346,7 +268,7 @@
                 <div class="col-lg-4">
                     <div class="blog-item">
                         <div class="blog-img">
-                            <img src="img/blog-1.jpg" alt="Image">
+                            <img src="views/visitante/img/blog-1.jpg" alt="Image">
                             <div class="meta-date">
                                 <span>01</span>
                                 <strong>Jan</strong>
@@ -371,7 +293,7 @@
                 <div class="col-lg-4">
                     <div class="blog-item">
                         <div class="blog-img">
-                            <img src="img/blog-2.jpg" alt="Image">
+                            <img src="views/visitante/img/blog-2.jpg" alt="Image">
                             <div class="meta-date">
                                 <span>01</span>
                                 <strong>Jan</strong>
@@ -396,7 +318,7 @@
                 <div class="col-lg-4">
                     <div class="blog-item">
                         <div class="blog-img">
-                            <img src="img/blog-3.jpg" alt="Image">
+                            <img src="views/visitante/img/blog-3.jpg" alt="Image">
                             <div class="meta-date">
                                 <span>01</span>
                                 <strong>Jan</strong>
@@ -493,17 +415,17 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="views/visitante/lib/easing/easing.min.js"></script>
+    <script src="views/visitante/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="views/visitante/lib/waypoints/waypoints.min.js"></script>
+    <script src="views/visitante/lib/counterup/counterup.min.js"></script>
 
     <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+    <script src="views/visitante/mail/jqBootstrapValidation.min.js"></script>
+    <script src="views/visitante/mail/contact.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="views/visitante/js/main.js"></script>
 </body>
 
 </html>
