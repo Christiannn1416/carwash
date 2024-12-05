@@ -114,13 +114,6 @@ switch ($accion) {
         } else {
             $data = $_POST;
         }
-
-        if (isset($data['correo'])) {
-            $data['correo'] = $data['correo'];
-        } else {
-
-            $data['correo'] = 'No disponible';
-        }
         if (isset($data['correo'])) {
 
             $data['correo'] = $data['correo'];
@@ -192,6 +185,23 @@ switch ($accion) {
         } else {
             echo "El ticket no existe o no se encuentra disponible.";
         }
+        break;
+
+    case 'generar_reporte':
+        $data = $_POST['fecha'];
+        $resultado = $app->generar_reporte($data);
+        if ($resultado == 0) {
+            $mensaje = "No hay lavados registrados ese día, checa la fecha";
+            $tipo = "warning";
+        } elseif ($resultado == 1) {
+            $mensaje = "El reporte se ha generado";
+            $tipo = "success";
+        } else {
+            $mensaje = "Ocurrió un problema";
+            $tipo = "danger";
+        }
+        $lavados = $app->readAll();
+        require_once('views/lavado/index.php');
         break;
     default:
         $lavados = $app->readAll();

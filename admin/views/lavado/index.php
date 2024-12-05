@@ -4,6 +4,15 @@
 endif; ?>
 
 <h1 class="text-center">Lavados</h1>
+
+<div class="text-end">
+    <h2>Reportes:</h2>
+    <form action="lavado.php?accion=generar_reporte" method="POST">
+        <input type="date" name="fecha" required>
+        <button type="submit" class="btn btn-primary">Generar Reporte</button>
+    </form>
+</div>
+
 <a href="lavado.php?accion=crear" class="btn btn-success">Nuevo<a>
 
         <table class="table table-striped table-dark">

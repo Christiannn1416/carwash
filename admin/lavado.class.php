@@ -5,6 +5,8 @@ use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Lavado extends Sistema
 {
@@ -416,6 +418,118 @@ class Lavado extends Sistema
         $read->execute();
         $result = $read->fetch(PDO::FETCH_ASSOC);
         return (int) $result['acumulado']; // Aseguramos que se devuelve un entero
+    }
+
+    function generar_reporte($data)
+    {
+        require_once "../vendor/autoload.php";
+
+        $this->conexion();
+        $sql = "select * from lavados where fecha = :fecha;";
+        $consulta = $this->con->prepare($sql);
+        $consulta->bindParam(':fecha', $data, PDO::PARAM_STR);
+        $consulta->execute();
+        $n_lavados = $consulta->rowCount();
+        if ($n_lavados == 0) {
+            return 0;
+        } else {
+            try {
+                # Obtener base de datos
+                $this->conexion();
+
+                $documento = new Spreadsheet();
+                $documento
+                    ->getProperties()
+                    ->setCreator("CarWash")
+                    ->setLastModifiedBy('Carwash')
+                    ->setTitle('Reporte del día' . $data);
+
+                $hojaDeLavados = $documento->getActiveSheet();
+                $hojaDeLavados->setTitle("Lavados");
+
+                # Encabezado de los productos
+                $encabezado = ["Id", "Id Cliente", "Vehiculo", "Color", "Placas", "Servicio", "Empleado", "Subtotal Servicio", "Subtotal Productos", "Fecha", "Total"];
+                $hojaDeLavados->fromArray($encabezado, null, 'A1');
+
+                $consulta = "select * from lavados where fecha = :fecha;";
+                $sentencia = $this->con->prepare($consulta, [
+                    PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL,
+                ]);
+                $sentencia->bindParam(':fecha', $data, PDO::PARAM_STR);
+                $sentencia->execute();
+
+                $numeroDeFila = 2;
+                $sumaTotal = 0;
+                $contadorLavados = 0;
+
+                while ($lavado = $sentencia->fetchObject()) {
+                    # Obtener registros de MySQL
+                    $id = $lavado->id_lavado;
+                    $cliente = $lavado->id_cliente;
+                    $vehiculo = $lavado->marca_vehiculo;
+                    $color = $lavado->color;
+                    $placas = $lavado->placas;
+                    $servicio = $lavado->id_servicio;
+                    $empleado = $lavado->id_empleado;
+                    $fecha = $lavado->fecha;
+
+                    # Subtotal de servicio
+                    $sql_servicio = "select precio from servicios where id_servicio = :id_servicio;";
+                    $consulta = $this->con->prepare($sql_servicio);
+                    $consulta->bindParam(':id_servicio', $servicio, PDO::PARAM_INT);
+                    $consulta->execute();
+                    $precio_servicio = $consulta->fetch(PDO::FETCH_ASSOC);
+
+                    # Subtotal de productos
+                    $sql_prod = "select sum(lp.cantidad*p.precio) as sub from lavadoproductos lp
+                         join productos p on lp.id_producto = p.id_producto
+                         where id_lavado = :id_lavado;";
+                    $consulta = $this->con->prepare($sql_prod);
+                    $consulta->bindParam(':id_lavado', $id, PDO::PARAM_INT);
+                    $consulta->execute();
+                    $sub_prod = $consulta->fetch(PDO::FETCH_ASSOC);
+
+                    if (!$sub_prod) {
+                        $sub_prod['sub'] = 0;
+                    }
+
+                    $total = $precio_servicio['precio'] + $sub_prod['sub'];
+                    $sumaTotal += $total;
+                    $contadorLavados++;
+
+                    # Escribir registros en el documento
+                    $hojaDeLavados->setCellValueByColumnAndRow(1, $numeroDeFila, $id);
+                    $hojaDeLavados->setCellValueByColumnAndRow(2, $numeroDeFila, $cliente);
+                    $hojaDeLavados->setCellValueByColumnAndRow(3, $numeroDeFila, $vehiculo);
+                    $hojaDeLavados->setCellValueByColumnAndRow(4, $numeroDeFila, $color);
+                    $hojaDeLavados->setCellValueByColumnAndRow(5, $numeroDeFila, $placas);
+                    $hojaDeLavados->setCellValueByColumnAndRow(6, $numeroDeFila, $servicio);
+                    $hojaDeLavados->setCellValueByColumnAndRow(7, $numeroDeFila, $empleado);
+                    $hojaDeLavados->setCellValueByColumnAndRow(8, $numeroDeFila, $precio_servicio['precio']);
+                    $hojaDeLavados->setCellValueByColumnAndRow(9, $numeroDeFila, $sub_prod['sub']);
+                    $hojaDeLavados->setCellValueByColumnAndRow(10, $numeroDeFila, $fecha);
+                    $hojaDeLavados->setCellValueByColumnAndRow(11, $numeroDeFila, $total);
+                    $numeroDeFila++;
+                }
+
+                # Agregar los totales al final
+                $hojaDeLavados->setCellValue("A" . $numeroDeFila, "Número total de lavados:");
+                $hojaDeLavados->setCellValue("B" . $numeroDeFila, $contadorLavados);
+                $hojaDeLavados->setCellValue("A" . ($numeroDeFila + 1), "Suma del total:");
+                $hojaDeLavados->setCellValue("B" . ($numeroDeFila + 1), $sumaTotal);
+
+                # Guardar el archivo
+                $writer = new Xlsx($documento);
+                $writer->save('../excel/reporte_de_' . $data . '.xlsx');
+
+                return 1; # Si todo salió bien
+            } catch (Exception $e) {
+                return 2;
+            }
+        }
+
+
+
     }
 
 }
