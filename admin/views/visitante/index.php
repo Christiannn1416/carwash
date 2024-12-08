@@ -1,4 +1,7 @@
-<?php require('views/alert_cliente.php'); ?>
+<?php if (isset($mensaje)):
+    $app->alert($tipo, $mensaje);
+    require('views/alert_cliente.php');
+endif; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -93,12 +96,12 @@
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto">
-                        <a href="index.php" class="nav-item nav-link active">Home</a>
-                        <a href="#" class="nav-item nav-link">Sobre Nosotros</a>
-                        <a href="#" class="nav-item nav-link">Servicios</a>
-                        <a href="#" class="nav-item nav-link">Price</a>
-                        <a href="#" class="nav-item nav-link">Washing Points</a>
-                        <a href="#" class="nav-item nav-link">Contacto</a>
+                        <a href="visitor.php" class="nav-item nav-link active">Home</a>
+                        <a href="#about" class="nav-item nav-link">Sobre Nosotros</a>
+                        <a href="#servicios" class="nav-item nav-link">Servicios</a>
+                        <a href="#productos" class="nav-item nav-link">Productos</a>
+                        <a href="#recompensas" class="nav-item nav-link">Recompensas</a>
+                        <a href="#registro" class="nav-item nav-link">Registro</a>
                     </div>
                 </div>
             </nav>
@@ -146,7 +149,7 @@
     <!-- Carousel End -->
 
     <!-- About Start -->
-    <div class="about">
+    <div id="about" class="about">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
@@ -179,7 +182,7 @@
     <!-- About End -->
 
     <!-- Price Start -->
-    <div class="price">
+    <div id="servicios" class="price">
         <div class="container">
             <div class="section-header text-center">
                 <p>Servicios</p>
@@ -205,9 +208,40 @@
     </div>
     <!-- Price End -->
 
+    <!-- Price Start -->
+    <div id="productos" class="price">
+        <div class="container">
+            <div class="section-header text-center">
+                <p>Productos</p>
+                <h2>Agrega un producto para siempre tener tu carro presentable</h2>
+            </div>
+            <div class="row">
+                <?php foreach ($productos as $producto): ?>
+                    <div class="col-md-4 p-3">
+                        <div class="price-item">
+                            <div class="price-header">
+                                <h3><?php echo $producto['producto'] ?></h3>
+                                <img src="<?php
+                                if (file_exists("../uploads/" . $producto['imagen'])) {
+                                    echo ("../uploads/" . $producto['imagen']);
+                                } else {
+                                    echo ("../uploads/default.png");
+                                }
+                                ?> " class="card-img-top p-3 m-auto" alt="<?php echo $producto['imagen']; ?>">
+                                <h2>$<?php echo $producto['precio'] ?></h2>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+        </div>
+    </div>
+    <!-- Price End -->
+
 
     <!-- Recompensa Start -->
-    <div class="location">
+    <div id="recompensas" class="location">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
@@ -219,7 +253,7 @@
                         <?php foreach ($recompensas as $recompensa): ?>
                             <div class="col-md-6">
                                 <div class="location-item">
-                                    <i class="fa fa-map-marker-alt"></i>
+                                    <i class="fa fa-gift"></i>
                                     <div class="location-text">
                                         <h3><?php echo $recompensa['recompensa']; ?></h3>
                                         <p>Acumulando <?php echo $recompensa['acumulado']; ?> Lavados</p>
@@ -229,7 +263,7 @@
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <div class="col-lg-5">
+                <div id="registro" class="col-lg-5">
                     <div class="location-form">
                         <h3>Registrate y empieza a ganar</h3>
                         <form action="visitor.php?accion=nuevo_registro" method="post">
