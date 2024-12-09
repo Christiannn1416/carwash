@@ -27,8 +27,8 @@ endif; ?>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <a href="servicio.php?accion=actualizar&id=<?php echo $servicio['id_servicio']; ?>"
                                 class="btn btn-primary" style="margin-right:1rem;">Actualizar</a>
-                            <a href="servicio.php?accion=eliminar&id=<?php echo $servicio['id_servicio']; ?>"
-                                class="btn btn-danger">Eliminar</a>
+                            <!-- <a href="servicio.php?accion=eliminar&id=<?php echo $servicio['id_servicio']; ?>"
+                                class="btn btn-danger">Eliminar</a> -->
                         </div>
                     </td>
                 </tr>

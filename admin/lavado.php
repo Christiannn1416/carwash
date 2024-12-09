@@ -77,19 +77,20 @@ switch ($accion) {
             $data = $_POST;
         }
         if (isset($data['correo'])) {
-
             $data['correo'] = $data['correo'];
+            $mandar_correo = 1;
         } else {
-
             $data['correo'] = 'No disponible';
+            $mandar_correo = 2;
         }
         $resultado = $app->create($data);
         if ($resultado) {
             $mensaje = "El lavado se ha agregado correctamente";
             $tipo = "success";
             $app->ticket();
-            $app->mandar_ticket($data['correo'], 'Ticket de servicio', 'Le proporcionamos su ticket.', '../tickets/reporte_lavado' . $data['id_lavado'] . '.pdf');
-
+            if ($mandar_correo = 1) {
+                $app->mandar_ticket($data['correo'], 'Ticket de servicio', 'Le proporcionamos su ticket.', '../tickets/reporte_lavado' . $data['id_lavado'] . '.pdf');
+            }
         } else {
             $mensaje = "Ocurrió un error al agregar";
             $tipo = "danger";

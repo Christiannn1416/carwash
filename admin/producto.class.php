@@ -7,19 +7,15 @@ class Producto extends Sistema
     {
         $result = [];
         $this->conexion();
-        $sql = "insert into productos(producto,descripcion,imagen,precio,stock)values(
+        $sql = "insert into productos(producto,imagen,precio)values(
                 :producto,
-                :descripcion,
                 :imagen,
-                :precio,
-                :stock);";
+                :precio);";
         $insertar = $this->con->prepare($sql);
         $fotografia = $this->uploadFoto();
         $insertar->bindParam(':producto', $data['producto'], PDO::PARAM_STR);
-        $insertar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
         $insertar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
         $insertar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
-        $insertar->bindParam(':stock', $data['stock'], PDO::PARAM_INT);
         $insertar->execute();
         $result = $insertar->rowCount();
         return $result;
@@ -33,27 +29,23 @@ class Producto extends Sistema
         if ($_FILES['imagen']['error'] != 4) {
             $fotografia = $this->uploadFoto();
             $tmp = "imagen=:imagen,";
-            $sql = 'update productos set 
+        }
+        $sql = 'update productos set 
                                     producto=:producto,
-                                    descripcion=:descripcion,
                                     ' . $tmp . '
-                                    precio=:precio,
-                                    stock=:stock
+                                    precio=:precio
                                     where id_producto=:id_producto;
                                      ';
-            $modificar = $this->con->prepare($sql);
-            $modificar->bindParam(':id_producto', $id, PDO::PARAM_INT);
-            $modificar->bindParam(':producto', $data['producto'], PDO::PARAM_STR);
-            $modificar->bindParam(':descripcion', $data['descripcion'], PDO::PARAM_STR);
-            if ($_FILES['imagen']['error'] != 4) {
-                $modificar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
-            }
-            $modificar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
-            $modificar->bindParam(':stock', $data['stock'], PDO::PARAM_INT);
-            $modificar->execute();
-            $result = $modificar->rowCount();
-            return $result;
+        $modificar = $this->con->prepare($sql);
+        $modificar->bindParam(':id_producto', $id, PDO::PARAM_INT);
+        $modificar->bindParam(':producto', $data['producto'], PDO::PARAM_STR);
+        if ($_FILES['imagen']['error'] != 4) {
+            $modificar->bindParam(':imagen', $fotografia, PDO::PARAM_STR);
         }
+        $modificar->bindParam(':precio', $data['precio'], PDO::PARAM_INT);
+        $modificar->execute();
+        $result = $modificar->rowCount();
+        return $result;
     }
 
     function delete($id)

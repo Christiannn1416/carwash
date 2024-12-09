@@ -15,6 +15,7 @@ class Usuario extends Sistema
             $insertar->bindParam(':usuario', $data['usuario'], PDO::PARAM_STR);
             $insertar->bindParam(':contrasena', $data['contrasena'], PDO::PARAM_STR);
             $insertar->execute();
+
             $sql = "select id_usuario from usuario where usuario=:usuario;";
             $consulta = $this->con->prepare($sql);
             $consulta->bindParam(':usuario', $data['usuario'], PDO::PARAM_STR);
@@ -33,7 +34,6 @@ class Usuario extends Sistema
                     $insertar_rol->execute();
                 }
                 $this->con->commit();
-                $this->sendMail($data['correo'], 'Bienvenido a CarWash', 'Bienvenido al Sistema');
                 return $insertar->rowCount();
             }
         } catch (Exception $e) {

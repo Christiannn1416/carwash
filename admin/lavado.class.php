@@ -189,6 +189,9 @@ class Lavado extends Sistema
         $data = $_POST['data'];
         $producto = $_POST['producto'];
         $id_cliente = $data['id_cliente'];
+        if ($id_cliente) {
+            $id_cliente = 0;
+        }
 
         $sql_cliente = 'select cliente from clientes where id_cliente = :id_cliente;';
         $buscar_cliente = $this->con->prepare($sql_cliente);
@@ -400,10 +403,8 @@ class Lavado extends Sistema
         $mail->msgHTML($mensaje);
 
         $mail->addAttachment($pdfPath);
-        if (!$mail->send()) {
+        if ($mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-            echo 'Message sent!';
         }
     }
 

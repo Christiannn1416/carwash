@@ -89,15 +89,5 @@ $app = new Administrador();
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card h-100 shadow">
-                <img src="icons/factura.png" class="card-img-top" alt="Tickets">
-                <div class="card-body">
-                    <h5 class="card-title">Tickets</h5>
-                    <p class="card-text">Consulta y gestiona los tickets generados.</p>
-                    <a href="ticket.php" class="btn btn-primary w-100">Ir</a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

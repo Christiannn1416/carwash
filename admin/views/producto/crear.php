@@ -18,29 +18,11 @@ endif; ?>" method="post" enctype="multipart/form-data">
         </div>
     </div>
     <div class="row mb-3">
-        <label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
-        <div class="col-sm-10">
-            <input type="text" name="data[descripcion]" placeholder="Escribe aquí la descripcion" class="form-control"
-                value="<?php if (isset($productos['descripcion'])):
-                    echo ($productos['descripcion']);
-                endif; ?>" />
-        </div>
-    </div>
-    <div class="row mb-3">
         <label for="precio" class="col-sm-2 col-form-label">Precio</label>
         <div class="col-sm-10">
             <input type="number" name="data[precio]" placeholder="Escribe aquí el precio" class="form-control" value="<?php if (isset($productos['precio'])):
                 echo ($productos['precio']);
             endif; ?>" />
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label for="stock" class="col-sm-2 col-form-label">Stock </label>
-        <div class="col-sm-10">
-            <input type="number" name="data[stock]" placeholder="Escribe aquí el stock inicial" class="form-control"
-                value="<?php if (isset($productos['stock'])):
-                    echo ($productos['stock']);
-                endif; ?>" />
         </div>
     </div>
     <div class="row mb-3">

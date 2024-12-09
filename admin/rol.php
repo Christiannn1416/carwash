@@ -1,16 +1,20 @@
 <?php
 require_once('rol.class.php');
+require_once('permiso.class.php');
 $app = new Rol();
 $app->checkRol('Administrador');
+$apppermiso = new Permiso();
 $accion = (isset($_GET['accion'])) ? $_GET['accion'] : NULL;
 $id = (isset($_GET['id'])) ? $_GET['id'] : null;
 
 switch ($accion) {
     case 'crear':
+        $permisos = $apppermiso->readAll();
+        $mispermisos = $app->readlAllPermisos($id);
         include 'views/roles/crear.php';
         break;
     case 'nuevo':
-        $data = $_POST['data'];
+        $data = $_POST;
         $resultado = $app->create($data);
         if ($resultado) {
             $mensaje = "El rol se agregó correctamente";
@@ -24,10 +28,12 @@ switch ($accion) {
         break;
     case 'actualizar':
         $rol = $app->readOne($id);
+        $permisos = $apppermiso->readAll();
+        $mispermisos = $app->readlAllPermisos($id);
         include('views/roles/crear.php');
         break;
     case 'modificar':
-        $data = $_POST['data'];
+        $data = $_POST;
         $resultado = $app->update($id, $data);
         if ($resultado) {
             $mensaje = "El rol se actualizó correctamente";
