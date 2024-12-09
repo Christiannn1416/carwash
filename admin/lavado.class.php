@@ -110,7 +110,6 @@ class Lavado extends Sistema
                 }
             }
         }
-
         return $filas_afectadas;
     }
 
@@ -189,10 +188,9 @@ class Lavado extends Sistema
         $data = $_POST['data'];
         $producto = $_POST['producto'];
         $id_cliente = $data['id_cliente'];
-        if ($id_cliente) {
+        if (!$id_cliente) {
             $id_cliente = 0;
         }
-
         $sql_cliente = 'select cliente from clientes where id_cliente = :id_cliente;';
         $buscar_cliente = $this->con->prepare($sql_cliente);
         $buscar_cliente->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
@@ -211,10 +209,8 @@ class Lavado extends Sistema
         $correo_usuario = $buscar_correo->fetch(PDO::FETCH_ASSOC);
 
         if ($correo_usuario) {
-            // Asegurarse de que la clave correcta del array es 'correo', no 'correo_usuario'
             $correo_usuario = $correo_usuario['correo'];
         } else {
-            // Establecer un valor predeterminado si no se encuentra el correo
             $correo_usuario = 'No disponible';
         }
 
@@ -366,7 +362,7 @@ class Lavado extends Sistema
     <h2>Total General: $' . ($total_productos + $precio_servicio) . '</h2>
 
     <div>
-        <p> Dirección: Av Irrigación 105-3 P · Contacto: 461 612 9727 </p>
+        <p> Dirección: ITC · Contacto: 461 123 4567 </p>
     </div>
     </body>
     </html>';

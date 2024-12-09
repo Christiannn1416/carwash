@@ -59,7 +59,7 @@ $app = new Administrador();
         </div>
         <div class="col">
             <div class="card h-100 shadow">
-                <img src="icons/productos.png" class="card-img-top" alt="Productos">
+                <img src="icons/regalar.png" class="card-img-top" alt="Productos">
                 <div class="card-body">
                     <h5 class="card-title">Recompensas</h5>
                     <a href="recompensa.php" class="btn btn-primary w-100 m-1">Agregar, eliminar o modificar.</a>

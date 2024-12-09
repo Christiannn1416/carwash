@@ -33,6 +33,8 @@ endif; ?>
                         <p class="card-text">$<?php echo $producto['precio']; ?></p>
                         <a href="producto.php?accion=actualizar&id=<?php echo $producto['id_producto']; ?>"
                             class="btn btn-primary">Editar</a>
+                        <a href="producto.php?accion=eliminar&id=<?php echo $producto['id_producto']; ?>"
+                            class="btn btn-danger">Eliminar</a>
                     </div>
                 </div>
             </div>
